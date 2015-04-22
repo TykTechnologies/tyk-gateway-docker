@@ -19,8 +19,8 @@ Quickstart
 
 3. Run Tyk:
 
-	`docker run -d --name tyk_gateway -p 8080:8080 --link tyk_redis:redis -v /home/foo/custom.tyk.conf:/etc/tyk/tyk.conf tykio/tyk-gateway-docker:v1.5.1`
+	`docker run -d --name tyk_gateway -p 8080:8080 --link tyk_redis:redis -v /home/foo/custom.tyk.conf:/etc/tyk/tyk.conf tykio/tyk-gateway:v1.5.1`
 
 You can use an external redis server, in wwhich case you don't need to run the link command, but you will still need to provide a custom configuration file:
 
-	docker run -d --name tyk_gateway -p 8080:8080 -v /home/foo/custom.tyk.conf:/etc/tyk/tyk.conf tykio/tyk-gateway-docker:v1.5.1
+	docker run -d --name tyk_gateway -p 8080:8080 -v /home/foo/custom.tyk.conf:/etc/tyk/tyk.conf tykio/tyk-gateway:v1.5.1
