@@ -1,4 +1,5 @@
-FROM dockerfile/ubuntu
+FROM ubuntu
+RUN apt-get update && apt-get install -y wget
 
 # Set up Tyk
 RUN wget https://github.com/lonelycode/tyk/releases/download/1.6/tyk.linux.amd64_1.6-1_all.deb
