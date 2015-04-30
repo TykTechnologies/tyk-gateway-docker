@@ -1,5 +1,5 @@
-Official Tyk Gateway Docker Build (v1.5.1)
-==========================================
+Official Tyk Gateway Docker Build
+=================================
 
 This container only contains the Tyk API gateway, the dashboard is provided as a seperate container and need to be configured separately.
 
@@ -14,8 +14,7 @@ This container will attempt to run with the host maanger enabled (for dashboard 
 	    "tyk_secret": "352d20ee67be67f6340b4c0605b044b7"
 	}
 
-This containerised build will work out of the box using v1.5.1 and a file-based setup. the /etc/tyk folder 
-is exposed to mount and modify configuration data, however simply overriding the tyk.conf file with a `-v` parameter will work too.
+This containerised build assumes a linked mongo and redis container, to use your own configuration simply override the tyk.conf file with a `-v` mount.
 
 Quickstart
 ----------
@@ -24,14 +23,20 @@ Quickstart
 
 	`docker pull redis`
 
-2. Run redis:
+2. Get a mongo (not required): 
+
+	`docker pull redis`
+
+3. Run redis and mongo:
 	
 	`docker run -d --name tyk_redis redis`
+	`docker run -d --name tyk_redis mongo`
 
-3. Run Tyk:
+4. Get Tyk Gateway
 
-	`docker run -d --name tyk_gateway -p 8080:8080 --link tyk_redis:redis -v /home/foo/custom.tyk.conf:/etc/tyk/tyk.conf -v /home/foo/custom.host_manager.json:/opt/tyk-dashboard/host-manager/host_manager.json tykio/tyk-gateway:v1.5.1`
+	`docker pull tykio/tyk-gateway`
 
-You can use an external redis server, in which case you don't need to run the link command, but you will still need to provide a custom configuration file:
+5. Run Tyk:
 
-	docker run -d --name tyk_gateway -p 8080:8080 -v /home/foo/custom.tyk.conf:/etc/tyk/tyk.conf tykio/tyk-gateway:v1.5.1
+	`docker run -d --name tyk_gateway -p 8080:8080 --link tyk_redis:redis --link tyk_mongo:mongo tykio/tyk-gateway`
+
