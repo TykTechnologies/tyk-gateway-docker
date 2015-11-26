@@ -9,16 +9,13 @@ RUN echo "deb https://packagecloud.io/tyk/tyk-gateway/ubuntu/ trusty main" | sud
 
 RUN echo "deb-src https://packagecloud.io/tyk/tyk-gateway/ubuntu/ trusty main" | sudo tee -a /etc/apt/sources.list.d/tyk_tyk-gateway.list
 
-RUN echo "deb https://packagecloud.io/tyk/tyk-dashboard/ubuntu/ trusty main" | sudo tee /etc/apt/sources.list.d/tyk_tyk-dashboard.list
-
-RUN echo "deb-src https://packagecloud.io/tyk/tyk-dashboard/ubuntu/ trusty main" | sudo tee -a /etc/apt/sources.list.d/tyk_tyk-dashboard.list
-
 RUN sudo apt-get update
-RUN sudo apt-get install -y tyk-gateway tyk-dashboard
+RUN sudo apt-get install -y tyk-gateway
 
+COPY ./tyk.standalone.conf /opt/tyk-gateway/tyk.conf
 VOLUME ["/opt/tyk-gateway/"]
 
 WORKDIR /opt/tyk-gateway
 
-CMD ["/opt/tyk-gateway/tyk --conf="/opt/tyk-gateway/tyk.conf"]
+CMD ["/opt/tyk-gateway/tyk", "--conf=/opt/tyk-gateway/tyk.conf"]
 EXPOSE 8080

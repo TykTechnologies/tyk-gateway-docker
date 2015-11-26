@@ -15,10 +15,30 @@ Quickstart
 2. Get Tyk Gateway
 
 	`docker pull tykio/tyk-gateway`
+    
+3. Run redis:
+	
+	`docker run -d --name tyk_redis redis`
 
-3. Run a standalone Tyk Gateway with your (modified) tyk.conf (see sample configs in our docker github repository):
+4. Run a standalone Tyk Gateway with your (modified) tyk.conf (see sample configs in our docker github repository):
 
 	`docker run -d --name tyk_gateway -p 8080:8080 --link tyk_redis:redis tykio/tyk-gateway -v ./tyk.standalone.conf /opt/tyk-gateway/tyk.conf` -v ./apps /opt/tyk-gateway/apps
 
+4b. Or to see the gateway in action (non daemonised):
+
+    docker run -p 8080:8080 --link tyk_redis:redis tykio/tyk-gateway
+
 Make sure the `apps` folder has some API Definitions set, otherwise Tyk won't proxy any trafic.
+
+5. Check it's running:
+
+    curl -L http://localhost:8080//tyk-api-test/get
+
+If you see:
+
+    {
+        "error": "Authorization field missing"
+    }
+
+Then Tyk is running, use our REST API to create some tokens and add some APIs!
 
