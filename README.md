@@ -1,42 +1,24 @@
 Official Tyk Gateway Docker Build
 =================================
 
-This container only contains the Tyk API gateway, the dashboard is provided as a seperate container and need to be configured separately.
+This container only contains the Tyk API gateway, the dashboard is provided as a seperate container and need to be configured separately. 
 
-This container will attempt to run with the host maanger enabled (for dashboard access), this will require you to provide your own host manager configuration to override the local one, here is a sample:
-
-	{
-	    "mongo_url": "mongodb://mongo:27017/tyk_analytics",
-	    "redis_port": 6379,
-	    "redis_host": "redis",
-	    "redis_password": "",
-	    "tyk_ports": [8080],
-	    "tyk_secret": "352d20ee67be67f6340b4c0605b044b7"
-	}
-
-This containerised build assumes a linked mongo and redis container, to use your own configuration simply override the tyk.conf file with a `-v` mount.
+Tyk will run with a defaut configuration unless it has been overriden ith the -v flag. Two sample configurations have been provided to run Tyk Gateway standalone (no DB or dashboard, file-based configurations) or with the dashboard and MongoDB.
 
 Quickstart
 ----------
 
-1. Get a redis container (not required): 
+1. Get a redis container (required - or use an external redis server): 
 
 	`docker pull redis`
 
-2. Get a mongo (not required): 
-
-	`docker pull redis`
-
-3. Run redis and mongo:
-	
-	`docker run -d --name tyk_redis redis`
-	`docker run -d --name tyk_redis mongo`
-
-4. Get Tyk Gateway
+2. Get Tyk Gateway
 
 	`docker pull tykio/tyk-gateway`
 
-5. Run Tyk:
+3. Run a standalone Tyk Gateway with your (modified) tyk.conf (see sample configs in our docker github repository):
 
-	`docker run -d --name tyk_gateway -p 8080:8080 --link tyk_redis:redis --link tyk_mongo:mongo tykio/tyk-gateway`
+	`docker run -d --name tyk_gateway -p 8080:8080 --link tyk_redis:redis tykio/tyk-gateway -v ./tyk.standalone.conf /opt/tyk-gateway/tyk.conf` -v ./apps /opt/tyk-gateway/apps
+
+Make sure the `apps` folder has some API Definitions set, otherwise Tyk won't proxy any trafic.
 

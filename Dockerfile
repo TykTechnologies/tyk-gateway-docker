@@ -1,17 +1,24 @@
 FROM ubuntu
-RUN apt-get update && apt-get install -y wget
-RUN apt-get install -y ca-certificates
+RUN apt-get update
+RUN apt-get install -y wget curl ca-certificates apt-transport-https curl
+RUN curl https://packagecloud.io/gpg.key | sudo apt-key add -
+RUN sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+RUN sudo apt-get update
 
-# Set up Tyk
-RUN wget https://github.com/lonelycode/tyk/releases/download/v1.8.3.2/tyk.linux.amd64_1.8.3.2-1_all.deb
-RUN sudo dpkg -i tyk.linux.amd64_1.8.3.2-1_all.deb
+RUN echo "deb https://packagecloud.io/tyk/tyk-gateway/ubuntu/ trusty main" | sudo tee /etc/apt/sources.list.d/tyk_tyk-gateway.list
 
-# Set up a docker-safe config
-COPY tyk.local.conf /etc/tyk/tyk.conf
+RUN echo "deb-src https://packagecloud.io/tyk/tyk-gateway/ubuntu/ trusty main" | sudo tee -a /etc/apt/sources.list.d/tyk_tyk-gateway.list
 
-VOLUME ["/etc/tyk/"]
+RUN echo "deb https://packagecloud.io/tyk/tyk-dashboard/ubuntu/ trusty main" | sudo tee /etc/apt/sources.list.d/tyk_tyk-dashboard.list
 
-WORKDIR /etc/tyk
+RUN echo "deb-src https://packagecloud.io/tyk/tyk-dashboard/ubuntu/ trusty main" | sudo tee -a /etc/apt/sources.list.d/tyk_tyk-dashboard.list
 
-CMD ["tyk"]
+RUN sudo apt-get update
+RUN sudo apt-get install -y tyk-gateway tyk-dashboard
+
+VOLUME ["/opt/tyk-gateway/"]
+
+WORKDIR /opt/tyk-gateway
+
+CMD ["/opt/tyk-gateway/tyk --conf="/opt/tyk-gateway/tyk.conf"]
 EXPOSE 8080
