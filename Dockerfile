@@ -10,7 +10,7 @@ RUN echo "deb https://packagecloud.io/tyk/tyk-gateway/ubuntu/ trusty main" | sud
 RUN echo "deb-src https://packagecloud.io/tyk/tyk-gateway/ubuntu/ trusty main" | sudo tee -a /etc/apt/sources.list.d/tyk_tyk-gateway.list
 
 RUN sudo apt-get update
-RUN sudo apt-get install -y tyk-gateway=2.0
+RUN sudo apt-get install -y tyk-gateway=2.0.0.0
 
 COPY ./tyk.standalone.conf /opt/tyk-gateway/tyk.conf
 VOLUME ["/opt/tyk-gateway/"]
