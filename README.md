@@ -22,7 +22,7 @@ Quickstart
 
 4. Run a standalone Tyk Gateway with your (modified) tyk.conf (see sample configs in our docker github repository):
 
-	`docker run -d --name tyk_gateway -p 8080:8080 --link tyk_redis:redis tykio/tyk-gateway -v ./tyk.standalone.conf /opt/tyk-gateway/tyk.conf` -v ./apps /opt/tyk-gateway/apps
+	`docker run -d --name tyk_gateway -p 8080:8080 --link tyk_redis:redis -v $(pwd)/tyk.standalone.conf:/opt/tyk-gateway/tyk.conf -v $(pwd)/apps:/opt/tyk-gateway/apps tykio/tyk-gateway`
 
 4b. Or to see the gateway in action (non daemonised):
 
