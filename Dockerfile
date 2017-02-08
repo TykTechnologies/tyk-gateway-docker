@@ -5,8 +5,6 @@ RUN curl https://packagecloud.io/gpg.key | apt-key add -
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 
 RUN apt-get update && apt-get install -y ca-certificates
-RUN apt-get install -y redis-server
-RUN apt-get install -y nginx
 RUN apt-get install -y wget
 RUN apt-get install -y build-essential
 RUN apt-get install -y libluajit-5.1-2
@@ -29,7 +27,7 @@ RUN echo "deb https://packagecloud.io/tyk/tyk-gateway/ubuntu/ trusty main" | sud
 RUN echo "deb-src https://packagecloud.io/tyk/tyk-gateway/ubuntu/ trusty main" | sudo tee -a /etc/apt/sources.list.d/tyk_tyk-gateway.list
 
 RUN apt-get update
-RUN apt-get install -y tyk-gateway=2.3.1.2
+RUN apt-get install -y tyk-gateway=2.3.2
 
 COPY ./tyk.standalone.conf /opt/tyk-gateway/tyk.conf
 VOLUME ["/opt/tyk-gateway/"]
