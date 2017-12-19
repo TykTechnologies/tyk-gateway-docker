@@ -1,6 +1,6 @@
-FROM ubuntu:14.04
+FROM debian:jessie-slim
 
-ENV PROTOVERSION 3.2.0
+ENV GRPCVERSION 1.7.0
 ENV TYKVERSION 2.4.2
 ENV TYKLANG ""
 
@@ -14,32 +14,25 @@ RUN apt-get update \
  && apt-get install -y --no-install-recommends \
             wget curl ca-certificates apt-transport-https gnupg unzip \
  && curl https://packagecloud.io/gpg.key | apt-key add - \
- && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10 \
  && apt-get install -y --no-install-recommends \
             build-essential \
             libluajit-5.1-2 \
             luarocks \
  && luarocks install lua-cjson \
- && wget -nv -O  /protobuf-python-$PROTOVERSION.tar.gz https://github.com/google/protobuf/releases/download/v$PROTOVERSION/protobuf-python-$PROTOVERSION.tar.gz \
- && cd / && tar -xzf protobuf-python-$PROTOVERSION.tar.gz \
- && cd /protobuf-$PROTOVERSION/ && ./configure -prefix=/usr && make && make install \
  && apt-get install -y --no-install-recommends \
             python3-setuptools \
-            python3-dev \
- && cd /protobuf-$PROTOVERSION/python \
- && python3 setup.py build   --cpp_implementation \
- && python3 setup.py install --cpp_implementation \
- && apt-get install -y --no-install-recommends \
             libpython3.4 \
-            python3-pip \
- && pip3 install grpcio \
- && cd / && rm -rf /protobuf-$PROTOVERSION && rm -f /protobuf-python-$PROTOVERSION.tar.gz \
- && echo "deb https://packagecloud.io/tyk/tyk-gateway/ubuntu/ trusty main"      | tee /etc/apt/sources.list.d/tyk_tyk-gateway.list \
- && echo "deb-src https://packagecloud.io/tyk/tyk-gateway/ubuntu/ trusty main"  | tee -a /etc/apt/sources.list.d/tyk_tyk-gateway.list \
+ && wget https://bootstrap.pypa.io/get-pip.py && python3 get-pip.py && rm get-pip.py \
+ && pip3 install grpcio==$GRPCVERSION \
+ && apt-get purge -y build-essential \
+ && apt-get autoremove -y \
+ && rm -rf /root/.cache
+
+# The application RUN command is separated from the dependencies to enable app updates to use docker cache for the deps
+RUN echo "deb https://packagecloud.io/tyk/tyk-gateway/debian/ jessie main" | tee /etc/apt/sources.list.d/tyk_tyk-gateway.list \
  && apt-get update \
  && apt-get install -y tyk-gateway=$TYKVERSION \
- && apt-get purge -y build-essential \
- && apt-get autoremove -y
+ && rm -rf /var/lib/apt/lists/*
 
 COPY ./tyk.standalone.conf /opt/tyk-gateway/tyk.conf
 COPY ./entrypoint.sh /opt/tyk-gateway/entrypoint.sh
@@ -50,4 +43,4 @@ WORKDIR /opt/tyk-gateway/
 
 EXPOSE $TYKLISTENPORT
 
-CMD ["./entrypoint.sh"]
+ENTRYPOINT ["./entrypoint.sh"]

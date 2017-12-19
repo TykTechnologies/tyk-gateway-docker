@@ -45,12 +45,12 @@ Then Tyk is running, use our REST API to create some tokens and add some APIs!
 Rich plugins
 ----------
 
-To run Tyk with rich plugins support, you must set the `TYKVERSION` environment variable. Currently supported values are `-python` and `-lua` (for Python/Lua support).
+To run Tyk with rich plugins support, you must set the `TYKLANG` environment variable. Currently supported values are `-python` and `-lua` (for Python/Lua support).
 
 An additional requirement is to provide a directory for the plugin bundles:
 ```
 $ mkdir bundles
-$ docker run -d --name tyk_gateway -p 8080:8080 --link tyk_redis:redis -v $(pwd)/tyk.standalone.conf:/opt/tyk-gateway/tyk.conf -v $(pwd)/apps:/opt/tyk-gateway/apps -v $(pwd)/bundles:/opt/tyk-gateway/middleware/bundles -e TYKVERSION='-python' tykio/tyk-gateway`
+$ docker run -d --name tyk_gateway -p 8080:8080 --link tyk_redis:redis -v $(pwd)/tyk.standalone.conf:/opt/tyk-gateway/tyk.conf -v $(pwd)/apps:/opt/tyk-gateway/apps -v $(pwd)/bundles:/opt/tyk-gateway/middleware/bundles -e TYKLANG='-python' tykio/tyk-gateway`
 ```
 
 Remember to modify your `tyk.conf` to include the required global parameters, essentially:
