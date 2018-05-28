@@ -1,13 +1,12 @@
 FROM debian:jessie-slim
 
 ENV GRPCVERSION 1.7.0
-ENV TYKVERSION 2.6.1
 ENV TYKLANG ""
 
 ENV TYKLISTENPORT 8080
 ENV TYKSECRET 352d20ee67be67f6340b4c0605b044b7
 
-LABEL Description="Tyk Gateway docker image" Vendor="Tyk" Version=$TYKVERSION
+LABEL Description="Tyk Gateway docker image" Vendor="Tyk" Version="Unstable"
 
 RUN apt-get update \
  && apt-get upgrade -y \
@@ -29,9 +28,9 @@ RUN apt-get update \
  && rm -rf /root/.cache
 
 # The application RUN command is separated from the dependencies to enable app updates to use docker cache for the deps
-RUN echo "deb https://packagecloud.io/tyk/tyk-gateway/debian/ jessie main" | tee /etc/apt/sources.list.d/tyk_tyk-gateway.list \
+RUN echo "deb https://packagecloud.io/tyk/tyk-gateway-unstable/debian/ jessie main" | tee /etc/apt/sources.list.d/tyk_tyk-gateway.list \
  && apt-get update \
- && apt-get install -y tyk-gateway=$TYKVERSION \
+ && apt-get install -y tyk-gateway \
  && rm -rf /var/lib/apt/lists/*
 
 COPY ./tyk.standalone.conf /opt/tyk-gateway/tyk.conf
