@@ -2,8 +2,8 @@
 
 TYKCONF=/opt/tyk-gateway/tyk.conf
 
-sed -i 's/TYKLISTENPORT/'${TYKLISTENPORT}'/g' ${TYKCONF}
-sed -i 's/TYKSECRET/'${TYKSECRET}'/g' ${TYKCONF}
+export TYK_GW_LISTENPORT="$TYKLISTENPORT"
+export TYK_GW_SECRET="$TYKSECRET"
 
 cd /opt/tyk-gateway/
 ./tyk$TYKLANG --conf=${TYKCONF}
