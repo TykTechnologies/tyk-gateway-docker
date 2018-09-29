@@ -26,7 +26,7 @@ Quickstart
 
 4b. Or to see the gateway in action (non daemonised):
 
-    docker run -p 8080:8080 --link tyk_redis:redis tykio/tyk-gateway
+    docker run -p 8080:8080 --name tyk_gateway --link tyk_redis:redis tykio/tyk-gateway
 
 Make sure the `apps` folder has some API Definitions set, otherwise Tyk won't proxy any trafic.
 
