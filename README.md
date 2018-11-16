@@ -1,30 +1,35 @@
 Official Tyk Gateway Docker Build
 =================================
 
-This container only contains the Tyk API gateway, the dashboard is provided as a seperate container and need to be configured separately. 
+This container only contains the Tyk API Gateway. The Tyk Dashboard is provided as a separate container and need to be configured separately. 
 
-Tyk will run with a defaut configuration unless it has been overriden with the -v flag. Two sample configurations have been provided to run Tyk Gateway standalone (no DB or dashboard, file-based configurations) or with the dashboard and MongoDB.
+Tyk will run with a default configuration unless it has been overridden with the `-v` flag. Two sample configurations have been provided to run the Tyk Gateway either as a standalone (no DB or Dashboard, file-based configurations) or with the Dashboard and MongoDB.
+
+The following ports are required to be open:
+
+For Redis: 6379
+For MongoDB: 27017
 
 Quickstart
 ----------
 
-1. Get a redis container (required - or use an external redis server): 
+1. Get a Redis container (required - or use an external Redis server): 
 
 	`docker pull redis`
 
-2. Get Tyk Gateway
+2. Get the Tyk Gateway
 
 	`docker pull tykio/tyk-gateway`
     
-3. Run redis:
+3. Run Redis:
 	
 	`docker run -d --name tyk_redis redis`
 
-4. Run a standalone Tyk Gateway with your (modified) tyk.conf (see sample configs in our gateway github https://github.com/TykTechnologies/tyk/tree/master/apps repository):
+4. Run a standalone Tyk Gateway with your (modified) tyk.conf (see sample configs in our Gateway github https://github.com/TykTechnologies/tyk/tree/master/apps repository):
 
 	`docker run -d --name tyk_gateway -p 8080:8080 --link tyk_redis:redis -v $(pwd)/tyk.standalone.conf:/opt/tyk-gateway/tyk.conf -v $(pwd)/apps:/opt/tyk-gateway/apps tykio/tyk-gateway`
 
-4b. Or to see the gateway in action (non daemonised):
+4b. Or to see the Gateway in action (non daemonised):
 
     docker run -p 8080:8080 --link tyk_redis:redis tykio/tyk-gateway
 
@@ -65,4 +70,4 @@ Remember to modify your `tyk.conf` to include the required global parameters, es
 
 These global parameters are covered in [this page](https://tyk.io/tyk-documentation/customise-tyk/plugins/rich-plugins/python/tutorial-add-demo-plugin-api/).
 
-For more information you may check the official documentation, there's a section covering the rich plugins feature [here](https://tyk.io/tyk-documentation/customise-tyk/plugins/rich-plugins/what-are-they/).
+For more information, check our [Rich Plugin documentation](https://tyk.io/tyk-documentation/customise-tyk/plugins/rich-plugins/what-are-they/).
