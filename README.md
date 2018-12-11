@@ -3,7 +3,7 @@ Official Tyk Gateway Docker Build
 
 This container only contains the Tyk API gateway, the dashboard is provided as a seperate container and need to be configured separately. 
 
-Tyk will run with a defaut configuration unless it has been overriden with the -v flag. Two sample configurations have been provided to run Tyk Gateway standalone (no DB or dashboard, file-based configurations) or with the dashboard and MongoDB.
+Tyk will run with a default configuration unless it has been overriden with the -v flag. Two sample configurations have been provided to run Tyk Gateway standalone (no DB or dashboard, file-based configurations) or with the dashboard and MongoDB.
 
 Quickstart
 ----------
@@ -28,7 +28,7 @@ Quickstart
 
     docker run -p 8080:8080 --link tyk_redis:redis tykio/tyk-gateway
 
-Make sure the `apps` folder has some API Definitions set, otherwise Tyk won't proxy any trafic.
+Make sure the `apps` folder has some API Definitions set, otherwise Tyk won't proxy any traffic.
 
 5. Check it's running:
 
