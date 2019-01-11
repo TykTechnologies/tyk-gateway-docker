@@ -5,42 +5,97 @@ This container only contains the Tyk API gateway, the dashboard is provided as a
 
 Tyk will run with a default configuration unless it has been overriden with the -v flag. Two sample configurations have been provided to run Tyk Gateway standalone (no DB or dashboard, file-based configurations) or with the dashboard and MongoDB.
 
-Quickstart
-----------
+### Configure a network
 
-1. Get a redis container (required - or use an external redis server): 
+```
+docker network create tyk
+ab1084d034c7e95735e10de804fc54aa940c031d2c4bb91d984675e5de2755e7
 
-	`docker pull redis`
+docker network ls
+NETWORK ID          NAME                DRIVER              SCOPE
+---snip---
+ab1084d034c7        tyk                 bridge              local
+```
 
-2. Get Tyk Gateway
+### Redis Dependency 
 
-	`docker pull tykio/tyk-gateway`
-    
-3. Run redis:
-	
-	`docker run -d --name tyk_redis redis`
+You will need a local redis container or external redis server for the gateway to communicate with.
 
-4. Run a standalone Tyk Gateway with your (modified) tyk.conf (see sample configs in our gateway github https://github.com/TykTechnologies/tyk/tree/master/apps repository):
+In a production environment, we would recommend that Redis is highly available and deployed as a cluster. 
 
-	`docker run -d --name tyk_gateway -p 8080:8080 --link tyk_redis:redis -v $(pwd)/tyk.standalone.conf:/opt/tyk-gateway/tyk.conf -v $(pwd)/apps:/opt/tyk-gateway/apps tykio/tyk-gateway`
+```
+# NOT FOR PRODUCTION
+docker pull redis:4.0-alpine
+docker run -itd --rm --name redis --network tyk -p 127.0.0.1:6379:6379 redis:4.0-alpine
 
-4b. Or to see the gateway in action (non daemonised):
+docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                        NAMES
+b713c61fd8fe        redis:4.0-alpine    "docker-entrypoint.s…"   5 seconds ago       Up 4 seconds        127.0.0.1:6379->6379/tcp     redis
+```
 
-    docker run -p 8080:8080 --link tyk_redis:redis tykio/tyk-gateway
+### Deploy Tyk Gateway
 
-Make sure the `apps` folder has some API Definitions set, otherwise Tyk won't proxy any traffic.
+```
+docker pull tykio/tyk-gateway:latest
+```
 
-5. Check it's running:
+Now that you have the gateway locally, you will need to grab a configuration file. You may use `tyk.standalone.conf` or 
+`tyk.with_dashboard.conf` from https://github.com/TykTechnologies/tyk-gateway-docker as a base template using the 
+appropriate version for your use-case. 
 
-    curl -L http://localhost:8080//tyk-api-test/get
+Documentation for gateway configuration can be found here: https://tyk.io/docs/configure/tyk-gateway-configuration-options/
 
-If you see:
+Alternatively, should you wish to configure tyk using environment variables, then you can find the mappings here: https://tyk.io/docs/configure/gateway-env-variables/
 
-    {
-        "error": "Authorization field missing"
-    }
+We will now run the gateway by mounting our modified `tyk.conf`.
 
-Then Tyk is running, use our REST API to create some tokens and add some APIs!
+### Gateway - Headless
+
+You may use example api definitions from https://github.com/TykTechnologies/tyk/tree/master/apps
+Store your API configurations inside local directory `./apps`.
+
+We may now start the gateway:
+
+```
+docker run -d \
+  --name tyk_gateway \
+  --network tyk \
+  -p 8080:8080 \
+  -v $(pwd)/tyk.standalone.conf:/opt/tyk-gateway/tyk.conf \
+  -v $(pwd)/apps:/opt/tyk-gateway/apps \
+  tykio/tyk-gateway:latest
+```
+
+### Gateway - Pro installation with Dashboard
+
+The gateway in a Pro installation is dependent on the dashboard service. We will assume that the dashboard service is
+installed, up and running. If not, we would recommend that you follow the dashboard installation guide here:
+
+https://github.com/TykTechnologies/tyk-dashboard-docker
+
+The gateway relies upon the dashboard service to load it's api definitions & proxy configurations.
+As such, there is no need to mount any app directory.
+
+```
+docker run -d \
+  --name tyk_gateway \
+  --network tyk \
+  -p 8080:8080 \
+  -v $(pwd)/tyk.with_dashboard.conf:/opt/tyk-gateway/tyk.conf \
+  tykio/tyk-gateway:latest
+```
+
+### Check everything is up and running
+
+```
+curl http://localhost:8080/hello -i
+HTTP/1.1 200 OK
+Date: Fri, 11 Jan 2019 15:53:29 GMT
+Content-Length: 10
+Content-Type: text/plain; charset=utf-8
+
+Hello Tiki
+```
 
 Rich plugins
 ----------
