@@ -5,7 +5,7 @@ This container only contains the Tyk API gateway, the dashboard is provided as a
 
 Tyk will run with a default configuration unless it has been overriden with the -v flag. Two sample configurations have been provided to run Tyk Gateway standalone (no DB or dashboard, file-based configurations) or with the dashboard and MongoDB.
 
-##Configure a network
+### Configure a network
 
 ```
 docker network create tyk
@@ -17,7 +17,7 @@ NETWORK ID          NAME                DRIVER              SCOPE
 ab1084d034c7        tyk                 bridge              local
 ```
 
-###Redis Dependency 
+### Redis Dependency 
 
 You will need a local redis container or external redis server for the gateway to communicate with.
 
@@ -33,7 +33,7 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 b713c61fd8fe        redis:4.0-alpine    "docker-entrypoint.s…"   5 seconds ago       Up 4 seconds        127.0.0.1:6379->6379/tcp     redis
 ```
 
-###Deploy Tyk Gateway
+### Deploy Tyk Gateway
 
 ```
 docker pull tykio/tyk-gateway:latest
