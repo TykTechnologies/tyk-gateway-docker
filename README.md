@@ -47,6 +47,13 @@ Documentation for gateway configuration can be found here: https://tyk.io/docs/c
 
 Alternatively, should you wish to configure tyk using environment variables, then you can find the mappings here: https://tyk.io/docs/configure/gateway-env-variables/
 
+Please note that should you wish to change the the gateway secret or listen port as recommended for a production installation, you will need to set `TYKSECRET` and `TYKLISTENPORT` environment variables. The rest of the environment variables remain as per mappings above.
+
+```
+TYKSECRET=foo
+TYKLISTENPORT=8000
+```
+
 We will now run the gateway by mounting our modified `tyk.conf`.
 
 ### Gateway - Headless
