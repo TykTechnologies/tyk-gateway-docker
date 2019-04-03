@@ -13,7 +13,7 @@ RUN apt-get update \
  && apt-get upgrade -y \
  && apt-get install -y --no-install-recommends \
             wget curl ca-certificates apt-transport-https gnupg unzip \
- && curl https://packagecloud.io/gpg.key | apt-key add - \
+ && curl -L https://packagecloud.io/tyk/tyk-gateway/gpgkey | apt-key add - \
  && apt-get install -y --no-install-recommends \
             build-essential \
             libluajit-5.1-2 \
