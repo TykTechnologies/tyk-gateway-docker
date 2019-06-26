@@ -5,7 +5,6 @@ ENV TYKVERSION 2.8.2
 ENV TYKLANG ""
 
 ENV TYKLISTENPORT 8080
-ENV TYKSECRET 352d20ee67be67f6340b4c0605b044b7
 
 LABEL Description="Tyk Gateway docker image" Vendor="Tyk" Version=$TYKVERSION
 
