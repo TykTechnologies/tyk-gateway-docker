@@ -2,6 +2,17 @@
 
 TYKCONF=/opt/tyk-gateway/tyk.conf
 
+# for backwards compatibility if TYKSECRET is empty, then set TYKSECRET to value in tyk.conf
+if [[ -z "${TYKSECRET}" ]]; then
+  echo "**************************************************************************************************************"
+  echo "*                                           WARNING                                                          *"
+  echo "**               USING GATEWAY SECRET IN TYK.CONF BECAUSE NO ENV VARIABLE SET                               **"
+  echo "*                                REFER TO IMAGE README FOR MORE INFO                                         *"
+  echo "**************************************************************************************************************"
+  echo ""
+  export TYKSECRET=$(cat tyk.conf | jq -r .secret)
+fi  
+
 # for backwards compatibility if TYKSECRET is not empty, then set TYK_GW_SECRET to TYKSECRET
 if [[ -n "${TYKSECRET}" ]]; then
   export TYK_GW_SECRET="${TYKSECRET}"
