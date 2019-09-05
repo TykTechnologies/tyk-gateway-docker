@@ -19,7 +19,7 @@ RUN apt-get update \
  && apt-get install -y --no-install-recommends \
             python3-setuptools \
             libpython3.4 \
- && apt-get install jq \
+            jq \
  && wget https://bootstrap.pypa.io/get-pip.py && python3 get-pip.py && rm get-pip.py \
  && pip3 install grpcio==$GRPCVERSION \
  && apt-get purge -y build-essential \

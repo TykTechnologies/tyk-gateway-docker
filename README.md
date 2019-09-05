@@ -47,10 +47,10 @@ Documentation for gateway configuration can be found here: https://tyk.io/docs/c
 
 Alternatively, should you wish to configure tyk using environment variables, then you can find the mappings here: https://tyk.io/docs/configure/environment-variables/
 
-Please note that you should set the gateway secret in the `TYKSECRET` environment variable.  If you do not, the entrypoint script will attempt to read the gateway secret into the `TYKSECRET` environment variable from the tyk.conf file.
+Please note that you should set the gateway secret in the `TYK_GW_SECRET` environment variable.  If you do not, the entrypoint script will attempt to set `TYK_GW_SECRET` environment variable from the value of `secret` in tyk.conf.
 
 ```
-TYKSECRET=foo
+TYK_GW_SECRET=foo
 ```
 
 We will now run the gateway by mounting our modified `tyk.conf`.
