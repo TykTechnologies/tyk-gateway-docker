@@ -4,8 +4,6 @@ ENV GRPCVERSION 1.7.0
 ENV TYKVERSION 2.8.4
 ENV TYKLANG ""
 
-ENV TYKLISTENPORT 8080
-
 LABEL Description="Tyk Gateway docker image" Vendor="Tyk" Version=$TYKVERSION
 
 RUN apt-get update \
@@ -21,6 +19,7 @@ RUN apt-get update \
  && apt-get install -y --no-install-recommends \
             python3-setuptools \
             libpython3.4 \
+            jq \
  && wget https://bootstrap.pypa.io/get-pip.py && python3 get-pip.py && rm get-pip.py \
  && pip3 install grpcio==$GRPCVERSION \
  && apt-get purge -y build-essential \
@@ -40,6 +39,6 @@ VOLUME ["/opt/tyk-gateway/"]
 
 WORKDIR /opt/tyk-gateway/
 
-EXPOSE $TYKLISTENPORT
+EXPOSE 8080
 
 ENTRYPOINT ["./entrypoint.sh"]
