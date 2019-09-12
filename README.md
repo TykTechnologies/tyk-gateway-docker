@@ -25,7 +25,7 @@ Quickstart
 	
 	`docker run -d --name tyk_redis redis`
 
-4. Run a standalone Tyk Gateway with your (modified) tyk.conf (see sample configs in our Gateway github https://github.com/TykTechnologies/tyk/tree/master/apps repository):
+4. Run a standalone Tyk Gateway with your (modified) tyk.conf (see sample configs in our Gateway repo https://github.com/TykTechnologies/tyk/tree/master/apps repository):
 
 	`docker run -d --name tyk_gateway -p 8080:8080 --link tyk_redis:redis -v $(pwd)/tyk.standalone.conf:/opt/tyk-gateway/tyk.conf -v $(pwd)/apps:/opt/tyk-gateway/apps tykio/tyk-gateway`
 
