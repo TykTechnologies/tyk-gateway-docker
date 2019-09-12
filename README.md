@@ -5,7 +5,7 @@ This container only contains the Tyk API Gateway. The Tyk Dashboard is provided 
 
 Tyk will run with a default configuration unless it has been overridden with the `-v` flag. Two sample configurations have been provided to run the Tyk Gateway either as a standalone (no DB or Dashboard, file-based configurations) or with the Dashboard and MongoDB.
 
-The following ports are required to be open:
+The following outbound ports are required to be open:
 
 For Redis: 6379
 For MongoDB: 27017
@@ -68,6 +68,6 @@ Remember to modify your `tyk.conf` to include the required global parameters, es
 "bundle_base_url": "http://my-bundle-server.com/bundles/",
 ```
 
-These global parameters are covered in [this page](https://tyk.io/tyk-documentation/customise-tyk/plugins/rich-plugins/python/tutorial-add-demo-plugin-api/).
+These global parameters are covered in [this page](https://tyk.io/docs/customise-tyk/plugins/rich-plugins/python/tutorial-add-demo-plugin-api/#a-name-global-settings-a-global-settings).
 
 For more information, check our [Rich Plugin documentation](https://tyk.io/tyk-documentation/customise-tyk/plugins/rich-plugins/what-are-they/).
