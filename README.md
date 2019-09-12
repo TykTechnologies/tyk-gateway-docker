@@ -25,11 +25,11 @@ Quickstart
 	
 	`docker run -d --name tyk_redis redis`
 
-4. Run a standalone Tyk Gateway with your (modified) tyk.conf (see sample configs in our Gateway repo https://github.com/TykTechnologies/tyk/tree/master/apps repository):
+4. Run a standalone Tyk Gateway with your (modified) tyk.conf (see sample configs in our Tyk Gateway repo https://github.com/TykTechnologies/tyk/tree/master/apps repository):
 
 	`docker run -d --name tyk_gateway -p 8080:8080 --link tyk_redis:redis -v $(pwd)/tyk.standalone.conf:/opt/tyk-gateway/tyk.conf -v $(pwd)/apps:/opt/tyk-gateway/apps tykio/tyk-gateway`
 
-4b. Or to see the Gateway in action (non daemonised):
+4a. Or to see the Tyk Gateway in action (non daemonised):
 
     docker run -p 8080:8080 --link tyk_redis:redis tykio/tyk-gateway
 
@@ -45,7 +45,7 @@ If you see:
         "error": "Authorization field missing"
     }
 
-Then Tyk is running, use our REST API to create some tokens and add some APIs!
+Then Tyk is running, use our Gateway REST API to create some tokens and add some APIs!
 
 Rich plugins
 ----------
