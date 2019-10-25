@@ -1,9 +1,9 @@
 Official Tyk Gateway Docker Build
 =================================
 
-This container only contains the Tyk API gateway, the dashboard is provided as a seperate container and need to be configured separately. 
+This container only contains the Tyk API gateway, the dashboard is provided as a separate container and need to be configured separately.
 
-Tyk will run with a default configuration unless it has been overriden with the -v flag. Two sample configurations have been provided to run Tyk Gateway standalone (no DB or dashboard, file-based configurations) or with the dashboard and MongoDB.
+Tyk will run with a default configuration unless it has been overridden with the -v flag. Two sample configurations have been provided to run Tyk Gateway standalone (no DB or dashboard, file-based configurations) or with the dashboard and MongoDB.
 
 ### Configure a network
 
@@ -17,11 +17,11 @@ NETWORK ID          NAME                DRIVER              SCOPE
 ab1084d034c7        tyk                 bridge              local
 ```
 
-### Redis Dependency 
+### Redis Dependency
 
 You will need a local redis container or external redis server for the gateway to communicate with.
 
-In a production environment, we would recommend that Redis is highly available and deployed as a cluster. 
+In a production environment, we would recommend that Redis is highly available and deployed as a cluster.
 
 ```
 # NOT FOR PRODUCTION
@@ -39,9 +39,9 @@ b713c61fd8fe        redis:4.0-alpine    "docker-entrypoint.s…"   5 seconds ago
 docker pull tykio/tyk-gateway:latest
 ```
 
-Now that you have the gateway locally, you will need to grab a configuration file. You may use `tyk.standalone.conf` or 
-`tyk.with_dashboard.conf` from https://github.com/TykTechnologies/tyk-gateway-docker as a base template using the 
-appropriate version for your use-case. 
+Now that you have the gateway locally, you will need to grab a configuration file. You may use `tyk.standalone.conf` or
+`tyk.with_dashboard.conf` from https://github.com/TykTechnologies/tyk-gateway-docker as a base template using the
+appropriate version for your use-case.
 
 Documentation for gateway configuration can be found here: https://tyk.io/docs/configure/tyk-gateway-configuration-options/
 
@@ -106,7 +106,7 @@ Hello Tiki
 Rich plugins
 ----------
 
-To run Tyk with rich plugins support, you must set the `TYKLANG` environment variable. Currently supported values are `-python` and `-lua` (for Python/Lua support).
+To run Tyk with rich plugins support, you must set the `TYKLANG` environment variable. Currently supported value is `-python` for Python support.
 
 An additional requirement is to provide a directory for the plugin bundles:
 ```
