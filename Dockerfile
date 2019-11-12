@@ -1,7 +1,7 @@
 FROM debian:jessie-slim
 
 ENV GRPCVERSION 1.7.0
-ENV TYKVERSION 2.8.6~131.729b371
+ENV TYKVERSION 2.8.6~132.9a65e44
 ENV TYKLANG ""
 
 LABEL Description="Tyk Gateway docker image" Vendor="Tyk" Version=$TYKVERSION
