@@ -106,7 +106,9 @@ Hello Tiki
 Rich plugins
 ----------
 
-To run Tyk with rich plugins support, you must set the `TYKLANG` environment variable. Currently supported value is `-python` for Python support.
+Tyk Gateway supports rich plugins as a part of the main binary since 2.9.0, making `TYKLANG` environement variable deprecated and is now ignored.
+
+If you're running image tag older than 2.9.0, To run Tyk with rich plugins support, you must set the `TYKLANG` environment variable. Currently supported value is `-python` for Python support.
 
 An additional requirement is to provide a directory for the plugin bundles:
 ```

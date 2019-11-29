@@ -24,4 +24,4 @@ if [[ -z "${TYK_GW_SECRET}" ]]; then
 fi
 
 cd /opt/tyk-gateway/
-./tyk$TYKLANG --conf=${TYKCONF}
+./tyk --conf=${TYKCONF}
