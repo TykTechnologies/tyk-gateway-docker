@@ -1,7 +1,7 @@
 FROM debian:buster-slim
 
 ENV GRPCVERSION 1.24.0
-ENV TYKVERSION 2.9.1
+ENV TYKVERSION 2.9.2
 ENV TYKLANG ""
 
 LABEL Description="Tyk Gateway docker image" Vendor="Tyk" Version=$TYKVERSION
