@@ -23,7 +23,7 @@ RUN apt-get update \
  && rm -rf /root/.cache
 
 # The application RUN command is separated from the dependencies to enable app updates to use docker cache for the deps
-RUN echo "deb https://packagecloud.io/tyk/tyk-gateway/debian/ buster main" | tee /etc/apt/sources.list.d/tyk_tyk-gateway.list \
+RUN echo "deb https://packagecloud.io/tyk/tyk-gateway/debian/ precise main" | tee /etc/apt/sources.list.d/tyk_tyk-gateway.list \
  && apt-get update \
  && apt-get install --allow-unauthenticated -f --force-yes -y tyk-gateway=$TYKVERSION \
  && rm -rf /var/lib/apt/lists/*
