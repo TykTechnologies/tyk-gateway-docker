@@ -15,9 +15,12 @@ RUN apt-get update \
             build-essential \
             python3-setuptools \
             libpython3.7 \
+            python3.7-dev \
             jq \
+ && rm -rf /usr/include/* && rm /usr/lib/x86_64-linux-gnu/*.a && rm /usr/lib/x86_64-linux-gnu/*.o \
+ && rm /usr/lib/python3.7/config-3.7m-x86_64-linux-gnu/*.a \
  && wget https://bootstrap.pypa.io/get-pip.py && python3 get-pip.py && rm get-pip.py \
- && pip3 install grpcio==$GRPCVERSION \
+ && pip3 install protobuf grpcio==$GRPCVERSION \
  && apt-get purge -y build-essential \
  && apt-get autoremove -y \
  && rm -rf /root/.cache
