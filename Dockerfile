@@ -10,7 +10,7 @@ RUN apt-get update \
  && apt-get upgrade -y \
  && apt-get install -y --no-install-recommends \
             wget curl ca-certificates apt-transport-https gnupg unzip \
- && curl -L https://packagecloud.io/tyk/tyk-gateway-unstable/gpgkey \
+ && curl -L https://packagecloud.io/tyk/tyk-gateway-unstable/gpgkey | apt-key add - \
  && apt-get install -y --no-install-recommends \
             build-essential \
             python3-setuptools \
