@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TYKCONF=/opt/tyk-gateway/tyk.conf
+TYKCONF=${TYKCONF:-/opt/tyk-gateway/tyk.conf}
 
 # for backwards compatibility if TYKSECRET is not empty, then set TYK_GW_SECRET to TYKSECRET
 if [[ -n "${TYKSECRET}" ]]; then
