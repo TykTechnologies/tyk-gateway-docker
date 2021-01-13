@@ -1,9 +1,23 @@
-Official Tyk Gateway Docker Build
+Tyk Gateway Docker
 =================================
 
-This container only contains the Tyk API Gateway, the Tyk Dashboard is provided as a separate container and needs to be configured separately.
+This container only contains the Tyk OSS API Gateway, the Tyk Dashboard is provided as a separate container and needs to be configured separately.
 
 Tyk will run with a default configuration unless it has been overridden with the `-v` flag. Two sample configurations have been provided to run the Tyk Gateway as standalone (no DB or dashboard, file-based configurations) or with the Tyk Dashboard and MongoDB.
+
+# Installation
+
+
+## Docker-Compose
+
+With docker-compose, simply run 
+```
+$ docker-compose up -d
+```
+
+This will run both Tyk GW & Redis.  It mounts two directories, `middleware` and `apps` to add your APIs as well as your custom plugins.
+
+## Docker
 
 ### Configure a network
 
