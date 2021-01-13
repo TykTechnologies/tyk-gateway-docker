@@ -19,55 +19,7 @@ This will run both Tyk GW & Redis.  It mounts two directories, `middleware` and 
 
 ## Docker
 
-### Configure a network
-
-```
-docker network create tyk
-ab1084d034c7e95735e10de804fc54aa940c031d2c4bb91d984675e5de2755e7
-
-docker network ls
-NETWORK ID          NAME                DRIVER              SCOPE
----snip---
-ab1084d034c7        tyk                 bridge              local
-```
-
-### Redis Dependency
-
-You will need a local Redis container or external Redis server for the Gateway to communicate with.
-
-In a production environment, we would recommend that Redis is highly available and deployed as a cluster.
-
-```
-# NOT FOR PRODUCTION
-docker pull redis:4.0-alpine
-docker run -itd --rm --name redis --network tyk -p 127.0.0.1:6379:6379 redis:4.0-alpine
-
-docker ps
-CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                        NAMES
-b713c61fd8fe        redis:4.0-alpine    "docker-entrypoint.s…"   5 seconds ago       Up 4 seconds        127.0.0.1:6379->6379/tcp     redis
-```
-
-### Deploy Tyk Gateway
-
-```
-docker pull tykio/tyk-gateway:latest
-```
-
-Now that you have the Gateway locally, you will need to grab a configuration file. You may use `tyk.standalone.conf` or
-`tyk.with_dashboard.conf` from https://github.com/TykTechnologies/tyk-gateway-docker as a base template using the
-appropriate version for your use-case.
-
-Documentation for gateway configuration can be found here: https://tyk.io/docs/tyk-configuration-reference/tyk-gateway-configuration-options/
-
-Alternatively, should you wish to configure tyk using environment variables, see https://tyk.io/docs/tyk-configuration-reference/environment-variables/ for details of how our environment variables are constructed.
-
-Please note that you should set the Gateway secret in the `TYK_GW_SECRET` environment variable.  If you do not, the entrypoint script will attempt to set `TYK_GW_SECRET` environment variable from the value of `secret` in tyk.conf.
-
-```
-TYK_GW_SECRET=foo
-```
-
-We will now run the Gateway by mounting our modified `tyk.conf`.
+Go to bottom for a manual Docker install
 
 ## Custom Plugins
 
@@ -134,3 +86,56 @@ $ curl localhost:8080/keyless-test/get
 That's it!  You're now writing custom plugins in Tyk.
 
 **Note**, the process for Go plugins and gRPC plugins is different.
+
+
+## Docker install
+
+### Configure a network
+
+```
+docker network create tyk
+ab1084d034c7e95735e10de804fc54aa940c031d2c4bb91d984675e5de2755e7
+
+docker network ls
+NETWORK ID          NAME                DRIVER              SCOPE
+---snip---
+ab1084d034c7        tyk                 bridge              local
+```
+
+### Redis Dependency
+
+You will need a local Redis container or external Redis server for the Gateway to communicate with.
+
+In a production environment, we would recommend that Redis is highly available and deployed as a cluster.
+
+```
+# NOT FOR PRODUCTION
+docker pull redis:4.0-alpine
+docker run -itd --rm --name redis --network tyk -p 127.0.0.1:6379:6379 redis:4.0-alpine
+
+docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                        NAMES
+b713c61fd8fe        redis:4.0-alpine    "docker-entrypoint.s…"   5 seconds ago       Up 4 seconds        127.0.0.1:6379->6379/tcp     redis
+```
+
+### Deploy Tyk Gateway
+
+```
+docker pull tykio/tyk-gateway:latest
+```
+
+Now that you have the Gateway locally, you will need to grab a configuration file. You may use `tyk.standalone.conf` or
+`tyk.with_dashboard.conf` from https://github.com/TykTechnologies/tyk-gateway-docker as a base template using the
+appropriate version for your use-case.
+
+Documentation for gateway configuration can be found here: https://tyk.io/docs/tyk-configuration-reference/tyk-gateway-configuration-options/
+
+Alternatively, should you wish to configure tyk using environment variables, see https://tyk.io/docs/tyk-configuration-reference/environment-variables/ for details of how our environment variables are constructed.
+
+Please note that you should set the Gateway secret in the `TYK_GW_SECRET` environment variable.  If you do not, the entrypoint script will attempt to set `TYK_GW_SECRET` environment variable from the value of `secret` in tyk.conf.
+
+```
+TYK_GW_SECRET=foo
+```
+
+We will now run the Gateway by mounting our modified `tyk.conf`.
