@@ -13,14 +13,7 @@
         "not_versioned": true,
         "versions": {
             "Default": {
-                "name": "Default",
-                "expires": "3000-01-02 15:04",
-                "use_extended_paths": true,
-                "extended_paths": {
-                    "ignored": [],
-                    "white_list": [],
-                    "black_list": []
-                }
+                "name": "Default"
             }
         }
     },
@@ -28,6 +21,5 @@
         "listen_path": "/tyk-api-test/",
         "target_url": "http://httpbin.org",
         "strip_listen_path": true
-    },
-    "enable_batch_request_support": true
+    }
 }
