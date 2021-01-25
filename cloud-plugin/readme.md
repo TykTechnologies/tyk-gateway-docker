@@ -5,13 +5,18 @@ How to generate a bundle to publish to the Tyk Cloud
 ```bash
 $ cd cloud-plugin
 
-$ docker run \                                                           
-  --rm \             
-  -v $(pwd):/cloudplugin \
-  --entrypoint "/bin/sh" -it \
-  -w "/cloudplugin" \
-  tykio/tyk-gateway:v3.1.2 \
-  -c '/opt/tyk-gateway/tyk bundle build -y'
+$ docker run \             
+--rm \
+-v $(pwd):/cloudplugin \
+--entrypoint "/bin/sh" -it \
+-w "/cloudplugin" \
+tykio/tyk-gateway:v3.1.2 \
+-c '/opt/tyk-gateway/tyk bundle build -y'
+
+[Jan 25 21:50:38]  INFO tyk: Building bundle using 'manifest.json'
+[Jan 25 21:50:38]  WARN tyk: Using default bundle path 'bundle.zip'
+[Jan 25 21:50:38]  WARN tyk: The bundle will be unsigned
+[Jan 25 21:50:38]  INFO tyk: Wrote 'bundle.zip' (890 bytes)
 ```
 
 ### 2. Push it to Cloud
