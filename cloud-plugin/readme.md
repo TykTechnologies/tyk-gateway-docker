@@ -5,7 +5,7 @@ How to generate a bundle to publish to the Tyk Cloud
 ```bash
 $ cd cloud-plugin
 
-$ docker run \             
+$ docker run \
 --rm \
 -v $(pwd):/cloudplugin \
 --entrypoint "/bin/sh" -it \
