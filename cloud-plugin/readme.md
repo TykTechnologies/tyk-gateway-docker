@@ -1,0 +1,26 @@
+How to generate a bundle to publish to the Tyk Cloud
+
+### 1. Generate bundle
+
+```bash
+$ cd cloud-plugin
+
+$ docker run \                                                           
+  --rm \             
+  -v $(pwd):/cloudplugin \
+  --entrypoint "/bin/sh" -it \
+  -w "/cloudplugin" \
+  tykio/tyk-gateway:v3.1.2 \
+  -c '/opt/tyk-gateway/tyk bundle build -y'
+```
+
+### 2. Push it to Cloud
+
+```bash
+$ ~/mservctl.macos.amd64 --config ~/tyk/ara.mservctl.yaml push bundle.zip
+INFO[0000] Using config file:/Users/sedky/tyk/ara.mservctl.yaml  app=mservctl
+Middleware uploaded successfully, ID: fdb89c5d-c698-433c-8ffe-f921da0b13db
+```
+
+### 3. Update API definition with following ID
+
