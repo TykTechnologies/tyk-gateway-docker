@@ -27,5 +27,7 @@ INFO[0000] Using config file:/Users/sedky/tyk/ara.mservctl.yaml  app=mservctl
 Middleware uploaded successfully, ID: fdb89c5d-c698-433c-8ffe-f921da0b13db
 ```
 
-### 3. Update API definition with following ID
+### 3. Update API definition with following ID from above:
+
+`fdb89c5d-c698-433c-8ffe-f921da0b13db`
 
