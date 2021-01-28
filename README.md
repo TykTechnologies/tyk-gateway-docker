@@ -14,4 +14,6 @@ With docker-compose, simply run
 $ docker-compose up -d
 ```
 
-Visit the [docs page](http://sedky.ca/tyk-gw-docker-dev-env/docs/gateway/overview) for a walkthrough on everything.
+[1. Your First API](get-started/your-first-api.md)
+[2. Your first token](get-started/your-first-token.md)
+[3. Your First Plugin](get-started/your-first-plugin.md)
