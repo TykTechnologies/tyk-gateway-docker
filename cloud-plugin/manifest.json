@@ -1,0 +1,16 @@
+{
+    "custom_middleware": {
+        "pre": [
+          {
+            "name": "testJSVMData",
+            "require_session": true,
+            "raw_body_only": false,
+            "path": "injectHeader.js"
+          }
+        ],
+        "driver": "otto"
+    },
+    "file_list": [
+      "injectHeader.js"
+    ]
+  }

@@ -1,0 +1,34 @@
+{
+    "name": "Tyk Test Keyless API",
+    "api_id": "keyless",
+    "org_id": "default",
+    "definition": {
+        "location": "header",
+        "key": "version"
+    },
+    "use_keyless": true,
+    "version_data": {
+        "not_versioned": true,
+        "versions": {
+            "Default": {
+                "name": "Default"
+            }
+        }
+    },
+    "custom_middleware": {
+        "pre": [
+          {
+            "name": "testJSVMData",
+            "path": "./middleware/injectHeader.js",
+            "require_session": false,
+            "raw_body_only": false
+          }
+        ]
+  },
+    "driver": "otto",
+    "proxy": {
+        "listen_path": "/keyless-test/",
+        "target_url": "http://httpbin.org",
+        "strip_listen_path": true
+    }
+}
