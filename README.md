@@ -6,6 +6,7 @@ This container only contains the Tyk OSS API Gateway, the Tyk Dashboard is provi
 
 # Installation
 
+Want to install using only Docker, or want a more advanced guide?  Visit the [Docker install](get-started/install-with-docker.md) page.
 
 ## Docker-Compose
 
