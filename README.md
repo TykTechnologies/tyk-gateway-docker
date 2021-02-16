@@ -44,6 +44,7 @@ it should look like this:
 ```
 
 2. Mount the hybrid conf into the Gateway in `docker-compose.yml`
+
 From
 ```
 - ./tyk.standalone.conf:/opt/tyk-gateway/tyk.conf
