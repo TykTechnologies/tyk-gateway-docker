@@ -20,3 +20,39 @@ $ docker-compose up -d
 [2. Your first token](get-started/your-first-token.md)
 
 [3. Your First Plugin](get-started/your-first-plugin.md)
+
+
+## Hybrid
+
+If you are setting up a Hybrid cluster, do the following:
+
+1. Change the following 3 values in `tyk.hybrid.conf`:
+```json
+    "slave_options": {
+        "rpc_key": "<ORG_ID>",
+        "api_key": "<API-KEY>",
+        "connection_string": "<MDCB-INGRESS>:443",
+```
+
+it should look like this:
+
+```json
+    "slave_options": {
+        "rpc_key": "j3jf8as9991ad881349",
+        "api_key": "adk12k9d891j48df824",
+        "connection_string": "persistent-bangalore-hyb.aws-usw2.cloud-ara.tyk.io:443",
+```
+
+2. Mount the hybrid conf into the Gateway in `docker-compose.yml`
+
+From
+```
+- ./tyk.standalone.conf:/opt/tyk-gateway/tyk.conf
+```
+
+To:
+```
+- ./tyk.hybrid.conf:/opt/tyk-gateway/tyk.conf
+```
+
+That's it!  Now run `docker-compose up`
