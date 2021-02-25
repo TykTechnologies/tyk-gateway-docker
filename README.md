@@ -26,6 +26,8 @@ $ docker-compose up -d
 
 If you are setting up a Hybrid cluster, do the following:
 
+**NOTE:** If you are using Tyk Classic Cloud your `<MDCB-INGRESS>` url is: "hybrid.cloud.tyk.io:9091"
+
 1. Change the following 3 values in `tyk.hybrid.conf`:
 ```json
     "slave_options": {
