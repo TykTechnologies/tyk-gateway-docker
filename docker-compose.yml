@@ -10,6 +10,7 @@ services:
       - ./tyk.standalone.conf:/opt/tyk-gateway/tyk.conf
       - ./apps:/opt/tyk-gateway/apps
       - ./middleware:/opt/tyk-gateway/middleware
+      - ./certs:/opt/tyk-gateway/certs
     environment:
       - TYK_GW_SECRET=foo
     depends_on:
