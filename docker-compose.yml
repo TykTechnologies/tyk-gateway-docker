@@ -3,13 +3,14 @@ services:
   tyk-gateway:
     image: tykio/tyk-gateway:v3.1.1
     ports:
-      - 8080:8080
+      - 8088:8080
     networks:
       - tyk
     volumes:
       - ./tyk.standalone.conf:/opt/tyk-gateway/tyk.conf
       - ./apps:/opt/tyk-gateway/apps
       - ./middleware:/opt/tyk-gateway/middleware
+      - ./certs:/opt/tyk-gateway/certs
     environment:
       - TYK_GW_SECRET=foo
     depends_on:
@@ -18,8 +19,6 @@ services:
     image: redis:5.0-alpine
     networks:
       - tyk
-    ports:
-      - 6379:6379
 
 networks:
   tyk:
