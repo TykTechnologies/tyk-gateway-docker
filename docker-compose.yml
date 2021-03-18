@@ -1,13 +1,13 @@
 version: '3.3'
 services:
-  tyk-gateway:
+  tyk-gateway-external:
     image: tykio/tyk-gateway:v3.1.1
     ports:
-      - 8088:8080
+      - 8088:8088
     networks:
       - tyk
     volumes:
-      - ./tyk.standalone.conf:/opt/tyk-gateway/tyk.conf
+      - ./tyk.standalone.tls.conf:/opt/tyk-gateway/tyk.conf
       - ./apps:/opt/tyk-gateway/apps
       - ./middleware:/opt/tyk-gateway/middleware
       - ./certs:/opt/tyk-gateway/certs
@@ -16,6 +16,26 @@ services:
     depends_on:
       - tyk-redis
   tyk-redis:
+    image: redis:5.0-alpine
+    networks:
+      - tyk
+
+  tyk-gateway-2.localhost: 
+    image: tykio/tyk-gateway:v3.1.1
+    ports:
+      - 8089:8089
+    networks:
+      - tyk
+    volumes:
+      - ./tyk.standalone.tls-2.conf:/opt/tyk-gateway/tyk.conf
+      - ./apps:/opt/tyk-gateway/apps
+      - ./middleware:/opt/tyk-gateway/middleware
+      - ./certs:/opt/tyk-gateway/certs
+    environment:
+      - TYK_GW_SECRET=foo
+    depends_on:
+      - tyk-redis-2
+  tyk-redis-2:
     image: redis:5.0-alpine
     networks:
       - tyk
