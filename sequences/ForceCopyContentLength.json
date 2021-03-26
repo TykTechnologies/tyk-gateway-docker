@@ -1,0 +1,15 @@
+{
+   "@name": "ForceCopyContentLength",
+   "property": [
+      {
+         "@name": "FORCE_HTTP_CONTENT_LENGTH",
+         "@value": "true",
+         "@scope": "axis2"
+      },
+      {
+         "@name": "COPY_CONTENT_LENGTH_FROM_INCOMING",
+         "@value": "true",
+         "@scope": "axis2"
+      }
+   ]
+}

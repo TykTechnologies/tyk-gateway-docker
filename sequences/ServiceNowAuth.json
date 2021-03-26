@@ -1,0 +1,21 @@
+{
+   "@name": "ServiceNowAuth",
+   "@trace": "disable",
+   "property": {
+      "@name": "authorization-header",
+      "@expression": "fn:concat('XJWTAssertion ', get-property('transport', 'X-JWT-Assertion'))"
+   },
+   "header": [
+      {
+         "@name": "Authorization",
+         "@expression": "get-property('authorization-header')",
+         "@scope": "transport"
+      },
+      {
+         "@name": "X-JWT-Assertion",
+         "@action": "remove",
+         "@description": "Delete X-JWT-Assertion Header",
+         "@scope": "transport"
+      }
+   ]
+}

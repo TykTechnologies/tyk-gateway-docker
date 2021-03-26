@@ -1,0 +1,33 @@
+{
+   "@name": "debug_out_flow",
+   "log": [
+      {
+         "@level": "full"
+      },
+      {
+         "@level": "custom",
+         "property": [
+            {
+               "@name": "EndPoint",
+               "@expression": "get-property('ENDPOINT_PREFIX')"
+            },
+            {
+               "@name": "Content-Type",
+               "@expression": "get-property('transport', 'Content-Type')"
+            },
+            {
+               "@name": "Status-Code",
+               "@expression": "get-property('axis2', 'HTTP_SC')"
+            },
+            {
+               "@name": "Context",
+               "@expression": "get-property('axis2', 'REST_URL_POSTFIX')"
+            },
+            {
+               "@name": "Client-ID",
+               "@expression": "get-property('client_id')"
+            }
+         ]
+      }
+   ]
+}

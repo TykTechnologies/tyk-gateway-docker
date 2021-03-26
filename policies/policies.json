@@ -1,0 +1,21 @@
+{
+  "POLICYID": {
+    "access_rights": {
+      "100": {
+        "allowed_urls": [],
+        "api_id": "100",
+        "api_name": "Dave Test API",
+        "versions": [
+            "Default"
+        ]
+    }
+  },
+  "active": true,
+  "name": "POLICY DAVE",
+  "rate": 100,
+  "per": 1,
+  "quota_max": 10000,
+  "quota_renewal_rate": 3600,
+  "tags": ["Startup Users"]
+  }
+}

@@ -1,18 +1,19 @@
 version: '3.3'
 services:
   tyk-gateway:
-    image: tykio/tyk-gateway:v3.1.1
+    image: tykio/tyk-gateway:v3.1.2
     ports:
       - 8080:8080
     networks:
       - tyk
     volumes:
-      - ./tyk.standalone.conf:/opt/tyk-gateway/tyk.conf
+      - ./tyk.mdcb.conf:/opt/tyk-gateway/tyk.conf
       - ./apps:/opt/tyk-gateway/apps
       - ./middleware:/opt/tyk-gateway/middleware
-      - ./certs:/opt/tyk-gateway/certs
     environment:
-      - TYK_GW_SECRET=foo
+      - TYK_GW_SECRET=2245CDD2-DEBA-41CC-A563-D07867894674
+      - HTTPS_PROXY=http://southwind.byu.edu:3128/
+      - HTTP_PROXY=http://southwind.byu.edu:3128/
     depends_on:
       - tyk-redis
   tyk-redis:

@@ -1,0 +1,154 @@
+{
+   "@name": "AddPeopleSoftWSSecurityHeader",
+   "@trace": "disable",
+   "property": [
+      {
+         "@name": "DISABLE_CHUNKING",
+         "@value": "true",
+         "@scope": "axis2"
+      },
+      {
+         "@description": "getActorNetId",
+         "@expression": "get-property('transport','Acting-For')",
+         "@name": "actorNetId",
+         "@scope": "default",
+         "@type": "STRING"
+      }
+   ],
+   "header": [
+      {
+         "@action": "remove",
+         "@description": "delete sm_user",
+         "@name": "sm_user",
+         "@scope": "transport"
+      },
+      {
+         "@action": "remove",
+         "@description": "delete principal_net_id",
+         "@name": "principal_net_id",
+         "@scope": "transport"
+      },
+      {
+         "@action": "remove",
+         "@description": "delete principal_byu_id",
+         "@name": "principal_byu_id",
+         "@scope": "transport"
+      },
+      {
+         "@action": "remove",
+         "@description": "delete principal_id",
+         "@name": "principal_id",
+         "@scope": "transport"
+      },
+      {
+         "@action": "remove",
+         "@description": "delete actor_id",
+         "@name": "actor_id",
+         "@scope": "transport"
+      },
+      {
+         "@action": "remove",
+         "@description": "delete actor_byu_id",
+         "@name": "actor_byu_id",
+         "@scope": "transport"
+      },
+      {
+         "@action": "remove",
+         "@description": "delete actor_net_id",
+         "@name": "actor_net_id",
+         "@scope": "transport"
+      },
+      {
+         "@scope": "default",
+         "Security": {
+            "@mustUnderstand": "1",
+            "UsernameToken": {
+               "Username": "changeme",
+               "Password": {
+                  "@Type": "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText"
+               }
+            }
+         }
+      }
+   ],
+   "class": {
+      "@description": "decode JWT Header",
+      "@name": "edu.byu.wso2.apim.extensions.JWTDecoder"
+   },
+   "filter": {
+      "@description": "Actor Support",
+      "@regex": "false",
+      "@source": "boolean(get-property('transport','Acting-For'))",
+      "then": {
+         "property": {
+            "@description": "addSMUserHeader",
+            "@expression": "get-property('resourceowner_net_id')",
+            "@name": "effective_net_id",
+            "@scope": "default",
+            "@type": "STRING"
+         }
+      },
+      "else": {
+         "class": {
+            "@description": "check actor permissions",
+            "@name": "edu.byu.wso2.apim.extensions.CheckActorPermissions",
+            "property": [
+               {
+                  "@name": "ResultPropertyName",
+                  "@value": "canUseActor"
+               },
+               {
+                  "@name": "PRODsName",
+                  "@value": "jdbc/BYUPRODB"
+               }
+            ]
+         },
+         "filter": {
+            "@description": "Actor Use denied",
+            "@regex": "false",
+            "@source": "boolean(get-property('canUseActor'))",
+            "then": {
+               "makefault": {
+                  "@description": "send fault",
+                  "@version": "soap11",
+                  "code": {
+                     "@value": "soap11Env:Client"
+                  },
+                  "reason": {
+                     "@value": "Not authorized"
+                  },
+                  "detail": "Not authorized to use Acting-For header"
+               },
+               "property": {
+                  "@description": "Set 403 return code",
+                  "@name": "HTTP_SC",
+                  "@scope": "axis2",
+                  "@type": "STRING",
+                  "@value": "403"
+               },
+               "respond": {
+                  "@description": "send fault"
+               }
+            },
+            "else": null
+         },
+         "property": {
+            "@description": "addActorSMUserHeader",
+            "@expression": "get-property('actorNetId')",
+            "@name": "effective_net_id",
+            "@scope": "default",
+            "@type": "STRING"
+         }
+      }
+   },
+   "enrich": {
+      "source": {
+         "@clone": "true",
+         "@property": "effective_net_id",
+         "@type": "property"
+      },
+      "target": {
+         "@xpath": "$header//wsse:UsernameToken//wsse:Username/text()"
+      }
+   }
+}

@@ -1,0 +1,13 @@
+{
+   "@name": "BoomiAuth",
+   "@trace": "disable",
+   "property": {
+      "@name": "authorization-header",
+      "@expression": "get-property('transport', 'X-JWT-Assertion')"
+   },
+   "header": {
+      "@name": "X-WSS-JWT-Assertion",
+      "@expression": "get-property('authorization-header')",
+      "@scope": "transport"
+   }
+}

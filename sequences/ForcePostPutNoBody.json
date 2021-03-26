@@ -1,0 +1,10 @@
+{
+   "@name": "ForcePostPutNoBody",
+   "@trace": "disable",
+   "property": {
+      "@name": "FORCE_POST_PUT_NOBODY",
+      "@value": "true",
+      "@scope": "axis2",
+      "@type": "BOOLEAN"
+   }
+}

@@ -1,0 +1,315 @@
+{
+   "@name": "PeopleSoftAddIP",
+   "@trace": "disable",
+   "property": [
+      {
+         "@name": "DISABLE_CHUNKING",
+         "@value": "true",
+         "@scope": "axis2"
+      },
+      {
+         "@description": "getActorNetId",
+         "@expression": "get-property('transport','Acting-For')",
+         "@name": "actorNetId",
+         "@scope": "default",
+         "@type": "STRING"
+      },
+      {
+         "@name": "rest_url_postfix",
+         "@expression": "get-property('axis2', 'REST_URL_POSTFIX')"
+      },
+      {
+         "@name": "REST_URL_POSTFIX",
+         "@expression": "get-property('rest_url_postfix')",
+         "@scope": "axis2",
+         "@type": "STRING"
+      },
+      {
+         "@description": "get X-Forwarded-For",
+         "@expression": "get-property('transport','x-forwarded-for')",
+         "@name": "xForwardedFor",
+         "@scope": "default",
+         "@type": "STRING"
+      },
+      {
+         "@name": "JSON-Payload",
+         "@expression": "json-eval($.)"
+      }
+   ],
+   "header": [
+      {
+         "@action": "remove",
+         "@description": "delete sm_user",
+         "@name": "sm_user",
+         "@scope": "transport"
+      },
+      {
+         "@action": "remove",
+         "@description": "delete principal_net_id",
+         "@name": "principal_net_id",
+         "@scope": "transport"
+      },
+      {
+         "@action": "remove",
+         "@description": "delete principal_byu_id",
+         "@name": "principal_byu_id",
+         "@scope": "transport"
+      },
+      {
+         "@action": "remove",
+         "@description": "delete principal_id",
+         "@name": "principal_id",
+         "@scope": "transport"
+      },
+      {
+         "@action": "remove",
+         "@description": "delete actor_id",
+         "@name": "actor_id",
+         "@scope": "transport"
+      },
+      {
+         "@action": "remove",
+         "@description": "delete actor_byu_id",
+         "@name": "actor_byu_id",
+         "@scope": "transport"
+      },
+      {
+         "@action": "remove",
+         "@description": "delete actor_net_id",
+         "@name": "actor_net_id",
+         "@scope": "transport"
+      },
+      {
+         "@action": "remove",
+         "@name": "x-forwarded-for",
+         "@scope": "transport"
+      }
+   ],
+   "class": [
+      {
+         "@description": "decode JWT Header",
+         "@name": "edu.byu.wso2.apim.extensions.JWTDecoder"
+      },
+      {
+         "@description": "denormalize",
+         "@name": "edu.byu.wso2.apim.extensions.DenormalizePeopleSoftURL",
+         "property": {
+            "@name": "PropertyName",
+            "@value": "rest_url_postfix"
+         }
+      }
+   ],
+   "filter": {
+      "@description": "Actor Support",
+      "@regex": "false",
+      "@source": "boolean(get-property('transport','Acting-For'))",
+      "then": {
+         "filter": {
+            "@description": "Has resource owner",
+            "@regex": "APPLICATION_USER",
+            "@source": "get-property('usertype')",
+            "then": {
+               "property": [
+                  {
+                     "@description": "add_RO_SMUserHeader",
+                     "@expression": "get-property('resourceowner_net_id')",
+                     "@name": "sm_user",
+                     "@scope": "transport",
+                     "@type": "STRING"
+                  },
+                  {
+                     "@description": "add_RO_BYUIdHeader",
+                     "@expression": "get-property('resourceowner_byu_id')",
+                     "@name": "principal_byu_id",
+                     "@scope": "transport",
+                     "@type": "STRING"
+                  },
+                  {
+                     "@description": "add_RO_NetIdHeader",
+                     "@expression": "get-property('resourceowner_net_id')",
+                     "@name": "principal_net_id",
+                     "@scope": "transport",
+                     "@type": "STRING"
+                  },
+                  {
+                     "@description": "add_RO_PersonIdHeader",
+                     "@expression": "get-property('resourceowner_person_id')",
+                     "@name": "principal_id",
+                     "@scope": "transport",
+                     "@type": "STRING"
+                  }
+               ]
+            },
+            "else": {
+               "property": [
+                  {
+                     "@description": "add_CLIENT_SMUserHeader",
+                     "@expression": "get-property('client_net_id')",
+                     "@name": "sm_user",
+                     "@scope": "transport",
+                     "@type": "STRING"
+                  },
+                  {
+                     "@description": "add_CLIENT_BYUIdHeader",
+                     "@expression": "get-property('client_byu_id')",
+                     "@name": "principal_byu_id",
+                     "@scope": "transport",
+                     "@type": "STRING"
+                  },
+                  {
+                     "@description": "add_CLIENT_NetIdHeader",
+                     "@expression": "get-property('client_net_id')",
+                     "@name": "principal_net_id",
+                     "@scope": "transport",
+                     "@type": "STRING"
+                  },
+                  {
+                     "@description": "add_CLIENT_PersonIdHeader",
+                     "@expression": "get-property('client_person_id')",
+                     "@name": "principal_id",
+                     "@scope": "transport",
+                     "@type": "STRING"
+                  }
+               ]
+            }
+         }
+      },
+      "else": {
+         "class": [
+            {
+               "@description": "check actor permissions",
+               "@name": "edu.byu.wso2.apim.extensions.CheckActorPermissions",
+               "property": [
+                  {
+                     "@name": "ResultPropertyName",
+                     "@value": "canUseActor"
+                  },
+                  {
+                     "@name": "PRODsName",
+                     "@value": "jdbc/BYUPRODB"
+                  }
+               ]
+            },
+            {
+               "@description": "LookupActorIdentifiers",
+               "@name": "edu.byu.wso2.apim.extensions.BYUIdentifiersLookup",
+               "property": [
+                  {
+                     "@name": "DsName",
+                     "@value": "jdbc/BYUPRODB"
+                  },
+                  {
+                     "@name": "PropertyPrefix",
+                     "@value": "actor"
+                  },
+                  {
+                     "@name": "NetIdPropertyToUse",
+                     "@value": "actorNetId"
+                  }
+               ]
+            }
+         ],
+         "filter": {
+            "@description": "Actor Use denied",
+            "@regex": "false",
+            "@source": "boolean(get-property('canUseActor'))",
+            "then": {
+               "header": {
+                  "@name": "To",
+                  "@action": "remove"
+               },
+               "property": [
+                  {
+                     "@name": "RESPONSE",
+                     "@value": "true"
+                  },
+                  {
+                     "@name": "NO_ENTITY_BODY",
+                     "@scope": "axis2",
+                     "@action": "remove"
+                  },
+                  {
+                     "@description": "Set 403 return code",
+                     "@name": "HTTP_SC",
+                     "@scope": "axis2",
+                     "@type": "STRING",
+                     "@value": "403"
+                  }
+               ],
+               "payloadFactory": {
+                  "@description": "set error message body",
+                  "@media-type": "xml",
+                  "format": {
+                     "fault": {
+                        "code": "BYU-100",
+                        "type": "Status report",
+                        "message": "Acting-For Error",
+                        "description": "Client application is not authorized to use Acting-For header"
+                     }
+                  },
+                  "args": null
+               },
+               "send": {
+                  "@description": "Send error response"
+               }
+            },
+            "else": null
+         },
+         "property": [
+            {
+               "@description": "add_CLIENT_BYUIdHeader",
+               "@expression": "get-property('client_byu_id')",
+               "@name": "principal_byu_id",
+               "@scope": "transport",
+               "@type": "STRING"
+            },
+            {
+               "@description": "add_CLIENT_NetIdHeader",
+               "@expression": "get-property('client_net_id')",
+               "@name": "principal_net_id",
+               "@scope": "transport",
+               "@type": "STRING"
+            },
+            {
+               "@description": "add_CLIENT_PersonIdHeader",
+               "@expression": "get-property('client_person_id')",
+               "@name": "principal_id",
+               "@scope": "transport",
+               "@type": "STRING"
+            },
+            {
+               "@description": "addActorNetIdHeader",
+               "@expression": "get-property('actorNetId')",
+               "@name": "actor_net_id",
+               "@scope": "transport",
+               "@type": "STRING"
+            },
+            {
+               "@description": "addActorSMUserHeader",
+               "@expression": "get-property('actorNetId')",
+               "@name": "sm_user",
+               "@scope": "transport",
+               "@type": "STRING"
+            },
+            {
+               "@description": "addActorBYUIdHeader",
+               "@expression": "get-property('actorBYUId')",
+               "@name": "actor_byu_id",
+               "@scope": "transport",
+               "@type": "STRING"
+            },
+            {
+               "@description": "addActorPersonIdHeader",
+               "@expression": "get-property('actorPersonId')",
+               "@name": "actor_id",
+               "@scope": "transport",
+               "@type": "STRING"
+            }
+         ]
+      }
+   },
+   "script": {
+      "@language": "js",
+      "#text": "var ipaddress = mc.getProperty(\"xForwardedFor\");\n      var payload_string = mc.getProperty(\"JSON-Payload\");\n      var payload = JSON.parse(payload_string);\n      if (payload.hasOwnProperty(\"timesheet\")) {\n          if (payload.timesheet.hasOwnProperty(\"punch\")) {\n            payload.timesheet.punch.internet_address = ipaddress;\n          }\n      }\n      mc.setPayloadJSON(payload);"
+   }
+}
