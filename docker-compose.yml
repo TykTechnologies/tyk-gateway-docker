@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   tyk-gateway:
-    image: tykio/tyk-gateway:v3.1.1
+    image: docker.tyk.io/tyk-gateway/tyk-gateway:v3.1.2
     ports:
       - 8080:8080
     networks:
