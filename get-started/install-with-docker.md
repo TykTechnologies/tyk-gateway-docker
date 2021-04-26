@@ -36,7 +36,7 @@ b713c61fd8fe        redis:4.0-alpine    "docker-entrypoint.s…"   5 seconds ago
 ### Deploy Tyk Gateway
 
 ```
-docker pull tykio/tyk-gateway:latest
+docker pull docker.tyk.io/tyk-gateway/tyk-gateway:latest
 ```
 
 Now that you have the Gateway locally, you will need to grab a configuration file. You may use `tyk.standalone.conf` or
@@ -69,7 +69,7 @@ docker run -d \
   -p 8080:8080 \
   -v $(pwd)/tyk.standalone.conf:/opt/tyk-gateway/tyk.conf \
   -v $(pwd)/apps:/opt/tyk-gateway/apps \
-  tykio/tyk-gateway:latest
+  docker.tyk.io/tyk-gateway/tyk-gateway:latest
 ```
 
 ### Gateway - Pro installation with Dashboard
@@ -88,7 +88,7 @@ docker run -d \
   --network tyk \
   -p 8080:8080 \
   -v $(pwd)/tyk.with_dashboard.conf:/opt/tyk-gateway/tyk.conf \
-  tykio/tyk-gateway:latest
+  docker.tyk.io/tyk-gateway/tyk-gateway:latest
 ```
 
 ### Check everything is up and running
@@ -113,7 +113,7 @@ If you're running an image tag older than v2.9.0, To run Tyk with rich plugins s
 An additional requirement is to provide a directory for the plugin bundles:
 ```
 $ mkdir bundles
-$ docker run -d --name tyk_gateway -p 8080:8080 --link tyk_redis:redis -v $(pwd)/tyk.standalone.conf:/opt/tyk-gateway/tyk.conf -v $(pwd)/apps:/opt/tyk-gateway/apps -v $(pwd)/bundles:/opt/tyk-gateway/middleware/bundles -e TYKLANG='-python' tykio/tyk-gateway`
+$ docker run -d --name tyk_gateway -p 8080:8080 --link tyk_redis:redis -v $(pwd)/tyk.standalone.conf:/opt/tyk-gateway/tyk.conf -v $(pwd)/apps:/opt/tyk-gateway/apps -v $(pwd)/bundles:/opt/tyk-gateway/middleware/bundles -e TYKLANG='-python' docker.tyk.io/tyk-gateway/tyk-gateway`
 ```
 
 Remember to modify your `tyk.conf` to include the required global parameters, essentially:
