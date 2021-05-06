@@ -10,7 +10,7 @@ $ docker run \
 -v $(pwd):/cloudplugin \
 --entrypoint "/bin/sh" -it \
 -w "/cloudplugin" \
-docker.tyk.io/tyk-gateway/tyk-gateway:v3.1.2 \
+docker.tyk.io/tyk-gateway/tyk-gateway:v3.2.0 \
 -c '/opt/tyk-gateway/tyk bundle build -y'
 
 [Jan 25 21:50:38]  INFO tyk: Building bundle using 'manifest.json'
