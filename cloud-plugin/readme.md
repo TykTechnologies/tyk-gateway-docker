@@ -10,7 +10,7 @@ $ docker run \
 -v $(pwd):/cloudplugin \
 --entrypoint "/bin/sh" -it \
 -w "/cloudplugin" \
-docker.tyk.io/tyk-gateway/tyk-gateway:v3.2.0 \
+docker.tyk.io/tyk-gateway/tyk-gateway:v3.2.1 \
 -c '/opt/tyk-gateway/tyk bundle build -y'
 
 [Jan 25 21:50:38]  INFO tyk: Building bundle using 'manifest.json'
@@ -30,4 +30,3 @@ Middleware uploaded successfully, ID: fdb89c5d-c698-433c-8ffe-f921da0b13db
 ### 3. Update API definition with following ID from above:
 
 `fdb89c5d-c698-433c-8ffe-f921da0b13db`
-
