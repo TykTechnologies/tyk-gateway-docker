@@ -40,4 +40,6 @@ WORKDIR /opt/tyk-gateway/
 
 EXPOSE 8080
 
+USER 999:999
+
 ENTRYPOINT ["./entrypoint.sh"]
