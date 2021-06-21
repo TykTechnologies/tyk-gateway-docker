@@ -1,0 +1,33 @@
+tasks:
+  - init: >
+      docker-compose up -d
+  - command: |
+      docker-compose up -d
+      curl localhost:8080/hello
+
+ports:
+  # redis
+  - port: 6379
+    onOpen: notify
+    visibility: private
+  # tyk
+  - port: 8080
+    onOpen: notify
+    visibility: private
+
+github:
+  prebuilds:
+    # enable for the default branch (defaults to true)
+    master: true
+    # enable for all branches in this repo (defaults to false)
+    branches: true
+    # enable for pull requests coming from this repo (defaults to true)
+    pullRequests: true
+    # enable for pull requests coming from forks (defaults to false)
+    pullRequestsFromForks: true
+    # add a check to pull requests (defaults to true)
+    addCheck: true
+    # add a "Review in Gitpod" button as a comment to pull requests (defaults to false)
+    addComment: true
+    # add a "Review in Gitpod" button to the pull request's description (defaults to false)
+    addBadge: false
