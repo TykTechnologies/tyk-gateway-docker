@@ -3,6 +3,11 @@ Tyk Gateway Docker
 
 This container only contains the Tyk OSS API Gateway, the Tyk Dashboard is provided as a separate container and needs to be configured separately.
 
+# Demonstration
+
+If you have a web browser, you can try out a fully pre-configured demonstration environment of the Tyk Gateway with one click:
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://github.com/TykTechnologies/tyk-gateway-docker)
 
 # Installation
 
