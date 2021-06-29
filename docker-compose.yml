@@ -12,7 +12,7 @@ services:
       - ./middleware:/opt/tyk-gateway/middleware
       - ./certs:/opt/tyk-gateway/certs
     environment:
-      - TYK_GW_SECRET=foo
+      - TYK_GW_SECRET=352d20ee67be67f6340b4c0605b044b7
     depends_on:
       - tyk-redis
   tyk-redis:
