@@ -1,3 +1,7 @@
+We would like to deprecate this repo as the release automation builds official images from the repo itself.
+
+If you'd like this repo to keep going, please do describe your use case in an issue and we can work something out.
+
 Tyk Gateway Docker
 =================================
 
