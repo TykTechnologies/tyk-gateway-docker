@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   tyk-gateway:
-    image: docker.tyk.io/tyk-gateway/tyk-gateway:v3.2.1
+    image: docker.tyk.io/tyk-gateway/tyk-gateway:v4.0.0-rc10
     ports:
       - 8080:8080
     networks:
@@ -11,6 +11,7 @@ services:
       - ./apps:/opt/tyk-gateway/apps
       - ./middleware:/opt/tyk-gateway/middleware
       - ./certs:/opt/tyk-gateway/certs
+      - ./plugin-auth-check/auth.so:/opt/tyk-gateway/plugins/auth.so
     environment:
       - TYK_GW_SECRET=foo
     depends_on:
