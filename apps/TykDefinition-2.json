@@ -1,7 +1,7 @@
 {
     "id": "61cb0986673e66000126d92f",
-    "name": "new",
-    "slug": "new",
+    "name": "new-1",
+    "slug": "new-1",
     "listen_port": 0,
     "protocol": "",
     "enable_proxy_protocol": false,
@@ -252,7 +252,7 @@
     },
     "proxy": {
         "preserve_host_header": false,
-        "listen_path": "/new/",
+        "listen_path": "/new-1/",
         "target_url": "http://httpbin.org/",
         "disable_strip_slash": true,
         "strip_listen_path": true,
