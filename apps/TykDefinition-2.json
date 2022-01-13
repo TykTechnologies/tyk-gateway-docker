@@ -286,12 +286,7 @@
         "pre": [],
         "post": [],
         "post_key_auth": [],
-        "auth_check": {
-            "name": "",
-            "path": "",
-            "require_session": false,
-            "raw_body_only": false
-        },
+        "auth_check": {},
         "response": [],
         "driver": "",
         "id_extractor": {
