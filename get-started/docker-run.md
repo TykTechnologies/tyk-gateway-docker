@@ -1,11 +1,8 @@
-Official Tyk Gateway Docker Build
-=================================
-
-This container only contains the Tyk API Gateway, the Tyk Dashboard is provided as a separate container and needs to be configured separately.
+# Running Tyk gateway using docker
 
 Tyk will run with a default configuration unless it has been overridden with the `-v` flag. Two sample configurations have been provided to run the Tyk Gateway as standalone (no DB or dashboard, file-based configurations) or with the Tyk Dashboard and MongoDB.
 
-### Configure a network
+## Configure a network
 
 ```
 docker network create tyk
@@ -17,13 +14,13 @@ NETWORK ID          NAME                DRIVER              SCOPE
 ab1084d034c7        tyk                 bridge              local
 ```
 
-### Redis Dependency
+## Redis Dependency
 
 You will need a local Redis container or external Redis server for the Gateway to communicate with.
 
 In a production environment, we would recommend that Redis is highly available and deployed as a cluster.
 
-```
+```bash
 # NOT FOR PRODUCTION
 docker pull redis:4.0-alpine
 docker run -itd --rm --name redis --network tyk -p 127.0.0.1:6379:6379 redis:4.0-alpine
@@ -33,9 +30,9 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 b713c61fd8fe        redis:4.0-alpine    "docker-entrypoint.s…"   5 seconds ago       Up 4 seconds        127.0.0.1:6379->6379/tcp     redis
 ```
 
-### Deploy Tyk Gateway
+## Deploy Tyk Gateway
 
-```
+```bash
 docker pull docker.tyk.io/tyk-gateway/tyk-gateway:latest
 ```
 
@@ -49,20 +46,20 @@ Alternatively, should you wish to configure tyk using environment variables, see
 
 Please note that you should set the Gateway secret in the `TYK_GW_SECRET` environment variable.  If you do not, the entrypoint script will attempt to set `TYK_GW_SECRET` environment variable from the value of `secret` in tyk.conf.
 
-```
+```bash
 TYK_GW_SECRET=foo
 ```
 
-We will now run the Gateway by mounting our modified `tyk.conf`.
+We will now run the Gateway by mounting [tyk.standalone.conf](./../tyk.standalone.conf), our modified version of `tyk.conf`.
 
-### Gateway - Community Edition
+### Run Tyk OSS Gateway
 
 You may use example api definitions from https://github.com/TykTechnologies/tyk/tree/master/apps
-Store your API configurations inside local directory `./apps`.
+Store your API configurations inside local directory [./apps](./../apps/).
 
 You can now start the Gateway:
 
-```
+```bash
 docker run -d \
   --name tyk_gateway \
   --network tyk \
@@ -72,17 +69,18 @@ docker run -d \
   docker.tyk.io/tyk-gateway/tyk-gateway:latest
 ```
 
-### Gateway - Pro installation with Dashboard
+### Tyk OSS Gateway used by Tyk Self Managed
 
-The Gateway in a Pro installation is dependent on the Tyk Dashboard service. We will assume that the Dashboard service is
-installed, and running. If not, we would recommend that you follow the Dashboard installation guide here:
+The OSS Gateway is also used with the Tyk Self managed installation (Tyk's licensed product). We will assume that the Tyk manager service is
+installed, and running. If not, we would recommend that you follow the [instructions](https://tyk.io/docs/tyk-self-managed/install/) for Tyk manager installation or this [doc](https://github.com/TykTechnologies/tyk-dashboard-docker). 
 
-https://github.com/TykTechnologies/tyk-dashboard-docker
+**FYI** For a quick docker compsoe of Tyk Self managed switch to [Tyk docker demo repo](https://github.com/TykTechnologies/tyk-pro-docker-demo).
 
-The Gateway relies upon the Dashboard service to load it's API definitions & proxy configurations.
-As such, there is no need to mount any app directory.
 
-```
+The Gateway relies upon the Dashboard service to load its API definitions & proxy configurations.
+As such, there is **no need** to mount any app directory.
+
+```bash
 docker run -d \
   --name tyk_gateway \
   --network tyk \
@@ -93,18 +91,29 @@ docker run -d \
 
 ### Check everything is up and running
 
-```
+```bash
 curl http://localhost:8080/hello -i
 HTTP/1.1 200 OK
-Date: Fri, 11 Jan 2019 15:53:29 GMT
-Content-Length: 10
-Content-Type: text/plain; charset=utf-8
+Content-Type: application/json
+Date: Mon, 25 Jul 2022 19:16:45 GMT
+Content-Length: 156
 
-Hello Tiki
+{
+  "status": "pass",
+  "version": "v3.2.1",
+  "description": "Tyk GW",
+  "details": {
+    "redis": {
+      "status": "pass",
+      "componentType": "datastore",
+      "time": "2022-07-25T19:16:16Z"
+    }
+  }
+}
+
 ```
 
-Rich plugins
-----------
+## Rich plugins
 
 The Tyk Gateway supports rich plugins as a part of the main binary since v2.9.0, making the `TYKLANG` environment variable deprecated and it is now ignored.
 
