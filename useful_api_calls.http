@@ -1,0 +1,49 @@
+# Check the gateway is up and running
+http://localhost:8080/hello
+
+### 
+# Get list of all the existing APIs
+http://localhost:8080/tyk/apis
+X-Tyk-Authorization: foo
+
+### 
+# Create your first API in Tyk gateway
+POST http://localhost:8080/tyk/apis/ HTTP/1.1
+X-Tyk-Authorization: foo
+Content-Type: application/json
+
+{
+    "name": "Tyk Test Keyless API",
+    "api_id": "my-keyless-test",
+    "org_id": "default",
+    "definition": {
+        "location": "header",
+        "key": "version"
+    },
+    "use_keyless": true,
+    "version_data": {
+        "not_versioned": true,
+        "versions": {
+            "Default": {
+                "name": "Default"
+            }
+        }
+    },
+    "custom_middleware": {
+        "pre": [
+            {
+                "name": "testJSVMData",
+                "path": "./middleware/injectHeader.js",
+                "require_session": false,
+                "raw_body_only": false
+            }
+        ]
+    },
+    "driver": "otto",
+    "proxy": {
+        "listen_path": "/my-keyless-test/",
+        "target_url": "http://httpbin.org",
+        "strip_listen_path": true
+    }
+}
+

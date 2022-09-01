@@ -134,10 +134,11 @@ That's it!  Now run `docker-compose up`
 ## How to use the project
 
 This repo has a few libraries that contain the file required to demo some of the Tyk gateway capabilities:
-- `./get-started` - to help you get start, this docs directory has instructions to create your first API, API key, first plugin etc.
-- `./app/` - Store your API configurations inside local directory `./apps`. You can also find in it example api definitions ready to use.
-- `./middleware/` - Store your plugins in this directory. For more information, Check [JavaScript Middleware documentation](https://tyk.io/docs/plugins/supported-languages/javascript-middleware/install-middleware/tyk-ce/). You can also find a Javascript example ready to use.
-- `./cloud-plugin/` - Many times you wouldn't want to store your plugin in the gateway, for that you can also use [a server to serve your plugins](https://tyk.io/docs/plugins/how-to-serve-plugins/plugin-bundles/) and the Tyk gateway will load them from that service. This directory explains how to do that when using [Tyk cloud](https://tyk.io/docs/tyk-cloud/configuration-options/using-plugins/uploading-bundle/#how-do-i-upload-my-bundle-file-to-my-amazon-s3-bucket) while the gateway is functioning as a Hybrid gateway.
+- [./get-started](./get-started/) - to help you get start, this docs directory has instructions to create your first API, API key, first plugin etc.
+- [./app/](./apps/) - Store your API configurations inside local directory `./apps`. You can also find in it example api definitions ready to use.
+- [./middleware/](./middleware/) - Store your plugins in this directory. For more information, Check [JavaScript Middleware documentation](https://tyk.io/docs/plugins/supported-languages/javascript-middleware/install-middleware/tyk-ce/). You can also find a Javascript example ready to use.
+- [./cloud-plugin/](./cloud-plugin/) - Many times you wouldn't want to store your plugin in the gateway, for that you can also use [a server to serve your plugins](https://tyk.io/docs/plugins/how-to-serve-plugins/plugin-bundles/) and the Tyk gateway will load them from that service. This directory explains how to do that when using [Tyk cloud](https://tyk.io/docs/tyk-cloud/configuration-options/using-plugins/uploading-bundle/#how-do-i-upload-my-bundle-file-to-my-amazon-s3-bucket) while the gateway is functioning as a Hybrid gateway.
+- [./certs](./certs/) - 
 
 
 
