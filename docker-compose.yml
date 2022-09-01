@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.9'
 services:
   tyk-gateway:
     image: docker.tyk.io/tyk-gateway/tyk-gateway:v4.1.0
@@ -16,7 +16,7 @@ services:
     depends_on:
       - tyk-redis
   tyk-redis:
-    image: redis:5.0-alpine
+    image: redis:6.2.7-alpine
     networks:
       - tyk
     ports:
