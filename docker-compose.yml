@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   tyk-gateway:
-    image: docker.tyk.io/tyk-gateway/tyk-gateway:v4.0.3
+    image: docker.tyk.io/tyk-gateway/tyk-gateway:v4.1.0
     ports:
       - 8080:8080
     networks:
