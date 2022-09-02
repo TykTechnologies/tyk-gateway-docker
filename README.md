@@ -14,7 +14,7 @@ This repo's goal is to reduce frictions in getting started with Tyk OSS gateway.
 2. API definitions - to quickly get from zero to a live API behind Tyk gateway you can find API defintion examples
 3. Gateway configurations - `tyk.conf` is set up appropriately and ready to use, including the API key to access/config the the gateway via its APIs.
 
-* If you want to build Tyk docker image yourself please use this [Dockerfile](https://github.com/TykTechnologies/tyk/blob/master/ci/Dockerfile.slim)
+* If you want to build Tyk docker image yourself please use this [Dockerfile](https://raw.githubusercontent.com/TykTechnologies/tyk/master/Dockerfile)
 
 ### Todo
 
@@ -90,12 +90,12 @@ If you want to run docker (not docker compose), use the instructions in this [do
 3. [Your First Plugin](get-started/your-first-plugin.md)
 
 
-## Hybrid Gateway
+## Hybrid Gateway - for paying users only!
 
-Hybrid gateway is an OSS gateway that connect to a control plane layer. The control plane can be self hosted (paying users) or on Tyk cloud.
+Hybrid gateway is the same Tyk OSS gateway but here it's connecting to a control plane layer (specifically to a component called [MDCB](https://tyk.io/docs/tyk-multi-data-centre/)). The [control plane](https://tyk.io/price-comparison/) can be self managed or via the SaaS offering on Tyk cloud. As such, this option can be used only by paying clients (including users that trial the paying option). 
 
 
-**FYI** Tyk cloud has also a [Cloud Free plan](https://tyk.io/docs/tyk-cloud/account-billing/plans/) and you can use it without any cost.
+**FYI** Tyk cloud has also a [Cloud Free plan](https://tyk.io/docs/tyk-cloud/account-billing/plans/) but Hybrid gateways are not part of it.
 
 To set up a Hybrid gateway/cluster of gateways, do the following:
 
