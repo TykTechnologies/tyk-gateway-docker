@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3.3'
 services:
   tyk-gateway:
     image: docker.tyk.io/tyk-gateway/tyk-gateway:v4.1.0
