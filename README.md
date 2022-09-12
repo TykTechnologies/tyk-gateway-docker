@@ -27,8 +27,9 @@ Add pump to the `docker compose` so we can stream analytics to a data sink.
 ### Requirements
 
 Before you start, please install the following binaries before starting:
-- docker compose
-- curl
+1. docker compose
+2. `curl` or any HTTP client (i.e. [Postman](https://www.postman.com/downloads/) or one of [VSCode extensions](https://marketplace.visualstudio.com/search?term=http%20client&target=VSCode&category=All%20categories&sortBy=Relevance))
+3. `jq` - Optional. If you are using a cmd HTTP client like `curl` to view 
 
 ### Option #1 - using docker compose
 
@@ -39,6 +40,8 @@ $ docker-compose up -d
 ```
 
 #### Check everything is up and running
+Call the `/hello` endpoint using your favourite HTTP client. 
+In the example below
 
 ```bash
 curl http://localhost:8080/hello -i
