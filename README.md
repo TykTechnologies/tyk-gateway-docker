@@ -10,8 +10,8 @@ This repository is used to try out and demo Tyk OSS Gateway. It contains a docke
 ## Purpose
 
 This repo's goal is to reduce frictions in getting started with Tyk OSS gateway.
-1. Redis - Tyk gateway requires a running Redis. To make an easy start this repo has a docker compose that spins up the gateway and Redis. The config of the gateway is already set up to find this Redis service. As soon as it's up the gateway is ready to use.
-2. API definitions - to quickly get from zero to a live API behind Tyk gateway you can find API defintion examples
+1. [Redis](https://redis.io/docs/about/) - Tyk gateway requires a running Redis. To make an easy start this repo has a docker compose that spins up the gateway and Redis. IF you use our `docker compose`, [the config of the gateway](./tyk.standalone.conf) is already set up to connect to the Redis service. As soon as it's up the gateway is ready to use.
+2. API definitions - This is the way to set Tyk Gateway to service your API. To quickly get from zero to a live API behind Tyk gateway use the API defintion examples under the [./apps](./apps) directory. 
 3. Gateway configurations - `tyk.conf` is set up appropriately and ready to use, including the API key to access/config the the gateway via its APIs.
 
 * If you want to build Tyk docker image yourself please use this [Dockerfile](https://raw.githubusercontent.com/TykTechnologies/tyk/master/Dockerfile)
@@ -30,6 +30,9 @@ This repo has a few libraries that contain the file required to demo some of the
 - [./cloud-plugin/](./cloud-plugin/) - Many times you wouldn't want to store your plugin in the gateway, for that you can also use [a server to serve your plugins](https://tyk.io/docs/plugins/how-to-serve-plugins/plugin-bundles/) and the Tyk gateway will load them from that service. This directory explains how to do that when using [Tyk cloud](https://tyk.io/docs/tyk-cloud/configuration-options/using-plugins/uploading-bundle/#how-do-i-upload-my-bundle-file-to-my-amazon-s3-bucket) while the gateway is functioning as a Hybrid gateway.
 - [./certs](./certs/) - 
 
+---
+
+**Please continue reading to get Tyk up and running:**
 
 ## Option 1 - Running Full Tyk Deployment Using docker compose
 
@@ -37,7 +40,8 @@ This repo has a few libraries that contain the file required to demo some of the
 
 Before you start, please install the following binaries:
 - docker compose
-- curl
+- [curl](https://everything.curl.dev/get) or any HTTP client (i.e. [Postman](https://www.postman.com/downloads/) or one of [VSCode extensions](https://marketplace.visualstudio.com/search?term=http%20client&target=VSCode&category=All%20categories&sortBy=Relevance))
+- [jq](https://stedolan.github.io/jq/download/) - Optional. If you are using a commandline HTTP client like `curl`, jq will help you to beautify the returned json.
 
 ### Start up the deployment
 Use [docker-compose.yaml](./docker-compose.yml) to spin up a Tyk OSS environment with one command. This will start two services, Tyk gateway and Redis use the following command
@@ -48,9 +52,15 @@ $ docker-compose up -d
 
 ### Check everything is up and running
 
+In the example below we call the `/hello` endpoint using curl (you can use any HTTP client you want):
+
+
 ```bash
 curl http://localhost:8080/hello -i
 ```
+
+It retunrs the gateway's version and the connection status of Redis.
+
 ```bash
 HTTP/1.1 200 OK
 Content-Type: application/json
@@ -74,7 +84,7 @@ Content-Length: 156
 
 ### Check the loaded apis
 
-To get the list of APIs that Tyk gateway is service run the following:
+To get the list of APIs that Tyk gateway services, run the following:
 
 ```bash
 curl http://localhost:8080/tyk/apis -H "X-Tyk-Authorization: foo"
@@ -86,9 +96,16 @@ http://localhost:8080/tyk/apis
 X-Tyk-Authorization: foo
 ```
 
-Notice that we used the api key (secret) to connect to the gateway. 
-`/tyk/apis` is the way to configure Tyk Gateway via APIs and as such it must be protected so only you can configure it.
+The reasponse is json array of the API definitons. 
+To beautify the list, use `jq`:
+```bash
+curl http://localhost:8080/tyk/apis -H "X-Tyk-Authorization: foo" | jq .
+```
 
+Notice that we used the api key (secret) to connect to the gateway. 
+`/tyk/apis` is the way to configure or check the configuration of Tyk Gateway via APIs and as such it must be protected so only you can connect it.
+
+---
 
 ## Option 2 - Running Tyk using docker
 
