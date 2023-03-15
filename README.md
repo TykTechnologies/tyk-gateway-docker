@@ -4,7 +4,7 @@
 # Tyk Gateway Docker
 
 ## About
-This repository is used to try out and demo Tyk OSS Gateway. It contains a docker compose to spin up the gateway and also a few example API definitions and plugins to demo and quickly learn its capabilities.
+This repository is used to try out and demo Tyk OSS Gateway. It contains a docker compose file to spin up Tyk Gateway and Redis. It includes a few example API definitions and plugins to demonstrate Tyk Gateway and help you to learn its capabilities.
 
 
 ## Purpose
@@ -16,32 +16,42 @@ This repo's goal is to reduce frictions in getting started with Tyk OSS gateway.
 
 * If you want to build Tyk docker image yourself please use this [Dockerfile](https://raw.githubusercontent.com/TykTechnologies/tyk/master/Dockerfile)
 
-### Todo
 
-Add pump to the `docker compose` so we can stream analytics to a data sink.
+## Project sturcture
+
+This repo has a few libraries that contain the file required to demo some of the Tyk gateway capabilities:
+- This README - please continue readin it before anything else, it will get you up and running.
+- [./get-started](./get-started/) - this docs directory has instructions to create your first API, API key, first plugin etc.
+  -  [Your First API](get-started/your-first-api.md)
+  -  [Your first token](get-started/your-first-token.md)
+  -  [Your First Plugin](get-started/your-first-plugin.md)
+- [./app/](./apps/) - Store your API configurations inside local directory `./apps`. You can also find in it example api definitions ready to use.
+- [./middleware/](./middleware/) - Store your plugins in this directory. For more information, Check [JavaScript Middleware documentation](https://tyk.io/docs/plugins/supported-languages/javascript-middleware/install-middleware/tyk-ce/). You can also find a Javascript example ready to use.
+- [./cloud-plugin/](./cloud-plugin/) - Many times you wouldn't want to store your plugin in the gateway, for that you can also use [a server to serve your plugins](https://tyk.io/docs/plugins/how-to-serve-plugins/plugin-bundles/) and the Tyk gateway will load them from that service. This directory explains how to do that when using [Tyk cloud](https://tyk.io/docs/tyk-cloud/configuration-options/using-plugins/uploading-bundle/#how-do-i-upload-my-bundle-file-to-my-amazon-s3-bucket) while the gateway is functioning as a Hybrid gateway.
+- [./certs](./certs/) - 
 
 
-
-## Running Tyk Gateway
+## Option 1 - Running Full Tyk Deployment Using docker compose
 
 ### Requirements
 
-Before you start, please install the following binaries before starting:
+Before you start, please install the following binaries:
 - docker compose
 - curl
 
-### Option #1 - using docker compose
-
+### Start up the deployment
 Use [docker-compose.yaml](./docker-compose.yml) to spin up a Tyk OSS environment with one command. This will start two services, Tyk gateway and Redis use the following command
 
-``` curl
+```curl
 $ docker-compose up -d
 ```
 
-#### Check everything is up and running
+### Check everything is up and running
 
 ```bash
 curl http://localhost:8080/hello -i
+```
+```bash
 HTTP/1.1 200 OK
 Content-Type: application/json
 Date: Mon, 25 Jul 2022 19:16:45 GMT
@@ -62,7 +72,7 @@ Content-Length: 156
 
 ```
 
-##### Check the loaded apis
+### Check the loaded apis
 
 To get the list of APIs that Tyk gateway is service run the following:
 
@@ -76,19 +86,13 @@ http://localhost:8080/tyk/apis
 X-Tyk-Authorization: foo
 ```
 
+Notice that we used the api key (secret) to connect to the gateway. 
+`/tyk/apis` is the way to configure Tyk Gateway via APIs and as such it must be protected so only you can configure it.
 
-#### Option #2 - using docker
 
-If you want to run docker (not docker compose), use the instructions in this [doc](get-started/docker-run.md) to get up and running.
+## Option 2 - Running Tyk using docker
 
-### Getting started
-
-1. [Your First API](get-started/your-first-api.md)
-
-2. [Your first token](get-started/your-first-token.md)
-
-3. [Your First Plugin](get-started/your-first-plugin.md)
-
+If you want to run *docker* (not docker compose), use the instructions in this [doc](get-started/docker-run.md) to get up and running.
 
 ## Hybrid Gateway - for paying users only!
 
@@ -119,53 +123,52 @@ it should look like this:
 2. Use the hybrid config file in docker compose by mounting it into the Gateway in `docker-compose.yml`
 
 Change from
-```json
+```bash
 - ./tyk.standalone.conf:/opt/tyk-gateway/tyk.conf
 ```
 
 To:
-```json
+```bash
 - ./tyk.hybrid.conf:/opt/tyk-gateway/tyk.conf
 ```
 
 That's it!  Now run `docker-compose up`
 
-
-## How to use the project
-
-This repo has a few libraries that contain the file required to demo some of the Tyk gateway capabilities:
-- [./get-started](./get-started/) - to help you get start, this docs directory has instructions to create your first API, API key, first plugin etc.
-- [./app/](./apps/) - Store your API configurations inside local directory `./apps`. You can also find in it example api definitions ready to use.
-- [./middleware/](./middleware/) - Store your plugins in this directory. For more information, Check [JavaScript Middleware documentation](https://tyk.io/docs/plugins/supported-languages/javascript-middleware/install-middleware/tyk-ce/). You can also find a Javascript example ready to use.
-- [./cloud-plugin/](./cloud-plugin/) - Many times you wouldn't want to store your plugin in the gateway, for that you can also use [a server to serve your plugins](https://tyk.io/docs/plugins/how-to-serve-plugins/plugin-bundles/) and the Tyk gateway will load them from that service. This directory explains how to do that when using [Tyk cloud](https://tyk.io/docs/tyk-cloud/configuration-options/using-plugins/uploading-bundle/#how-do-i-upload-my-bundle-file-to-my-amazon-s3-bucket) while the gateway is functioning as a Hybrid gateway.
-- [./certs](./certs/) - 
-
-
+---
 
 ## PRs
 PRs with new examples and fixes are most welcomed.
 A contributor guide will be added in the future but for the time being, please explain your PR in the description and provide evidence for manual testing of the code.
 
-#### SLA
+### SLA
 First response (clarifying questions/guidance on improvements/answering questions) - target of **48 hours**
 Detailed review and feedback on PRs - target 7 days
 
 ----
+
 ## Bugs
 
 We'd love to know about any bug or defect you find, no matter how small it is.
 
-#### SLA
+### SLA
 First response (clarifying questions/guidance on improvements/answering questions) - target of **48 hours**
 
+---
 
 ## Features
 
 We'd love to hear from you. Any feedback, idea or feature request is most welcomed.
 
-#### SLA
+### SLA
 First response (clarifying questions/guidance on improvements/answering questions) - target **72 hours**
 
+---
+
+## Todo
+
+Add pump to the `docker compose` so we can stream analytics to a data sink.
+
+---
 
 ## Questions
 For question on products, please use [Tyk Community forum](https://community.tyk.io/).
