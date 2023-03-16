@@ -40,7 +40,11 @@ This repo has a few libraries that contain the file required to demo some of the
 
 Before you start, please install the following binaries:
 - docker compose
-- [curl](https://everything.curl.dev/get) or any HTTP client (i.e. [Postman](https://www.postman.com/downloads/) or one of [VSCode extensions](https://marketplace.visualstudio.com/search?term=http%20client&target=VSCode&category=All%20categories&sortBy=Relevance))
+- HTTP Client - There are lots of options in the market: 
+  - Most common one, for commandline is [curl](https://everything.curl.dev/get)
+  - For GUI users, the most commond one is [Postman](https://www.postman.com/downloads/) 
+  - For VS Code users, you can get any of these [VSCode extensions](https://marketplace.visualstudio.com/search?term=http%20client&target=VSCode&category=All%20categories&sortBy=Relevance)). 
+    - If you chose [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) extention, then you can use our example file [./useful_api_calls.http](useful_api_calls.http) to quickly get up and running.
 - [jq](https://stedolan.github.io/jq/download/) - Optional. If you are using a commandline HTTP client like `curl`, jq will help you to beautify the returned json.
 
 ### Start up the deployment
