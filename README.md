@@ -8,8 +8,8 @@ Click [here](#start-up-the-deployment) to get up and running but please remember
 
 ## Useful Reading 
 
-### Important settings when using Tyk
-These settings apply to any Tyk OSS deployment, this one using Docker Compose as well as test and production environments.
+### Requirements
+These settings apply to any Tyk OSS deployment, for development as well as production environments.
 
 1. [**Redis**](https://redis.io/docs/about/) - Tyk gateway requires a running Redis. To make an easy start this repo has a _Docker Compose_ that spins up the gateway and Redis. If you use our `docker compose`, [the config of the gateway](./tyk.standalone.conf) is already set up to connect to the Redis service. As soon as it's up the gateway is ready to use.
 2. **API definitions** - This is the way to set Tyk Gateway to service your API. To quickly get from zero to a live API behind _Tyk Gateway_ use the API definition examples under the [./apps](./apps) directory. 
@@ -58,7 +58,7 @@ Before you start, please install the following binaries:
 ### Start up the deployment
 Use [docker-compose.yml](./docker-compose.yml) to spin up a Tyk OSS environment with one command. This will start two services, Tyk gateway and Redis use the following command
 
-```curl
+```console
 $ docker-compose up -d
 ```
 
@@ -103,7 +103,7 @@ curl http://localhost:8080/tyk/apis -H "X-Tyk-Authorization: foo"
 ```
 
 or in VS Code in a `some-file.http`: 
-```curl
+```http
 http://localhost:8080/tyk/apis
 X-Tyk-Authorization: foo
 ```
