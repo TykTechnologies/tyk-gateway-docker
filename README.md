@@ -8,8 +8,8 @@ Click [here](#start-up-the-deployment) to get up and running but please remember
 
 ## Useful Reading 
 
-### Important settings when using Tyk
-These settings apply to any Tyk OSS deployment, this one using Docker Compose as well as test and production environments.
+### Requirements
+These settings apply to any Tyk OSS deployment, for development as well as production environments.
 
 1. [**Redis**](https://redis.io/docs/about/) - Tyk gateway requires a running Redis. To make an easy start this repo has a _Docker Compose_ that spins up the gateway and Redis. If you use our `docker compose`, [the config of the gateway](./tyk.standalone.conf) is already set up to connect to the Redis service. As soon as it's up the gateway is ready to use.
 2. **API definitions** - This is the way to set Tyk Gateway to service your API. To quickly get from zero to a live API behind _Tyk Gateway_ use the API definition examples under the [./apps](./apps) directory. 
@@ -27,8 +27,22 @@ This repo has a few libraries that contain the file required to demo some of the
 - [./cloud-plugin/](./cloud-plugin/) - Many times you wouldn't want to store your plugin in the gateway, for that you can also use [a server to serve your plugins](https://tyk.io/docs/plugins/how-to-serve-plugins/plugin-bundles/) and the Tyk gateway will load them from that service. This directory explains how to do that when using [Tyk cloud](https://tyk.io/docs/tyk-cloud/configuration-options/using-plugins/uploading-bundle/#how-do-i-upload-my-bundle-file-to-my-amazon-s3-bucket) while the gateway is functioning as a Hybrid gateway.
 - [./certs](./certs/) - 
 
-## Getting Started 
+
+### Important settings when using Tyk
+These settings apply to any Tyk OSS deployment, this one using Docker Compose as well as test and production environments.
+
+1. [**Redis**](https://redis.io/docs/about/) - Tyk gateway requires a running Redis. To make an easy start this repo has a _Docker Compose_ that spins up the gateway and Redis. If you use our `docker compose`, [the config of the gateway](./tyk.standalone.conf) is already set up to connect to the Redis service. As soon as it's up the gateway is ready to use.
+2. **API definitions** - This is the way to set Tyk Gateway to service your API. To quickly get from zero to a live API behind _Tyk Gateway_ use the API definition examples under the [./apps](./apps) directory. 
+3. **Gateway configurations** - `tyk.conf` is set up appropriately and ready to use, including the API key to access/config the gateway via its APIs.
+
+---
+
+**To spin up Tyk deployment - Please continue reading**
+
+## Option 1 - Running Full Tyk Deployment Using Docker Compose
+
 In this section, you will spin up a full Tyk OSS Deployment Using *Docker Compose*
+
 
 ### Requirements
 
@@ -44,7 +58,7 @@ Before you start, please install the following binaries:
 ### Start up the deployment
 Use [docker-compose.yml](./docker-compose.yml) to spin up a Tyk OSS environment with one command. This will start two services, Tyk gateway and Redis use the following command
 
-```curl
+```console
 $ docker-compose up -d
 ```
 
@@ -59,7 +73,7 @@ curl http://localhost:8080/hello -i
 
 It returns the gateway's version and the connection status of Redis.
 
-```bash
+```curl
 HTTP/1.1 200 OK
 Content-Type: application/json
 Date: Mon, 25 Jul 2022 19:16:45 GMT
@@ -89,7 +103,7 @@ curl http://localhost:8080/tyk/apis -H "X-Tyk-Authorization: foo"
 ```
 
 or in VS Code in a `some-file.http`: 
-```curl
+```http
 http://localhost:8080/tyk/apis
 X-Tyk-Authorization: foo
 ```
@@ -105,12 +119,18 @@ Notice that we used the API key (secret) to connect to the gateway.
 
 ---
 
-## Getting started using Tyk using *Docker*
+## Option 2 - Running Tyk using Docker
+
+If you want to run `docker` (not `docker compose`), use [these instructions](get-started/docker-run.md).
 
 For production, in which you use `docker` (not `docker compose`), check the [instructions](get-started/docker-run.md) on our docs website.
 
+
 ### Build your own Tyk Docker image
 To you want to build an image yourself please use this [Dockerfile](https://raw.githubusercontent.com/TykTechnologies/tyk/master/Dockerfile)
+
+
+---
 
 ## Tyk Hybrid Gateway - for paying users only!
 
