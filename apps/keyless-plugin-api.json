@@ -17,18 +17,18 @@
     },
     "custom_middleware": {
         "pre": [
-          {
-            "name": "testJSVMData",
-            "path": "./middleware/injectHeader.js",
-            "require_session": false,
-            "raw_body_only": false
-          }
-        ]
-  },
-    "driver": "otto",
+            {
+                "name": "testJSVMData",
+                "path": "middleware/injectHeader.js",
+                "require_session": false,
+                "raw_body_only": false
+            }
+        ],
+        "driver": "otto"
+    },
     "proxy": {
         "listen_path": "/keyless-test/",
-        "target_url": "http://httpbin.org",
+        "target_url": "https://karan.requestcatcher.com",
         "strip_listen_path": true
     }
 }
