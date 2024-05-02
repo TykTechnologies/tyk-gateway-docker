@@ -16,6 +16,7 @@
         }
     },
     "custom_middleware": {
+        "driver": "otto",
         "pre": [
           {
             "name": "testJSVMData",
@@ -25,7 +26,6 @@
           }
         ]
   },
-    "driver": "otto",
     "proxy": {
         "listen_path": "/keyless-test/",
         "target_url": "http://httpbin.org",
