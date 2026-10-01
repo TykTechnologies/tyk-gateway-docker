@@ -1,5 +1,11 @@
 # Tyk Gateway Docker
 
+> [!WARNING]
+> **Deprecated: this repository is no longer maintained.** It is pinned to an old Tyk Gateway version.
+> - To run the open source Tyk Gateway with Docker, follow the [Tyk Open Source Gateway quick start](https://tyk.io/docs/deployment-and-operations/tyk-open-source-api-gateway/quick-start). For other platforms, see [Tyk Open Source installation](https://tyk.io/docs/apim/open-source/installation).
+> - To run a Hybrid Gateway connected to Tyk Cloud, use [tyk-install/docker/hybrid](https://github.com/TykTechnologies/tyk-install/tree/main/docker/hybrid).
+> - To try the full Tyk Self-Managed stack, use [tyk-install](https://github.com/TykTechnologies/tyk-install).
+
 ## About
 This repository serves as a playground to help you experiment with `Tyk Gateway`. It includes a _Docker Compose_ file that allows you to quickly set up _Tyk Gateway_ and _Redis_. Additionally, the repository provides several example API definitions and plugins to showcase the gateway's capabilities and help you learn some of its features.
 
